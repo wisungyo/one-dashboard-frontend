@@ -44,7 +44,38 @@ const options: ApexOptions = {
   },
 
   xaxis: {
-    categories: ["M", "T", "W", "T", "F", "S", "S"],
+    categories: [
+      "1",
+      "2",
+      "3",
+      "4",
+      "5",
+      "6",
+      "7",
+      "8",
+      "9",
+      "10",
+      "11",
+      "12",
+      "13",
+      "14",
+      "15",
+      "16",
+      "17",
+      "18",
+      "19",
+      "20",
+      "21",
+      "22",
+      "23",
+      "24",
+      "25",
+      "26",
+      "27",
+      "28",
+      "29",
+      "30",
+    ],
   },
   legend: {
     position: "top",
@@ -74,11 +105,11 @@ const ChartTwo: React.FC = () => {
     series: [
       {
         name: "Sales",
-        data: [44, 55, 41, 67, 22, 43, 65],
-      },
-      {
-        name: "Revenue",
-        data: [13, 23, 20, 8, 13, 27, 15],
+        data: [
+          230, 180, 290, 140, 200, 220, 270, 180, 150, 280, 210, 240, 160, 260,
+          170, 190, 220, 250, 290, 130, 180, 270, 300, 200, 170, 250, 240, 290,
+          140, 170,
+        ],
       },
     ],
   });
@@ -91,7 +122,7 @@ const ChartTwo: React.FC = () => {
   handleReset;
 
   return (
-    <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-4">
+    <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-12">
       <div className="mb-4 justify-between gap-4 sm:flex">
         <div>
           <h4 className="text-xl font-semibold text-black dark:text-white">

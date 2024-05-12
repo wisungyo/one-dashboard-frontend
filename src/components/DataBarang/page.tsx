@@ -5,13 +5,13 @@ import ChartTwo from "@/components/Charts/ChartTwo";
 import ChartThree from "@/components/Charts/ChartThree";
 import React from "react";
 
-const Chart: React.FC = () => {
+const DataBarang: React.FC = () => {
   return (
     <>
       <Breadcrumb pageName="Data Barang" />
 
       <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
-        <ChartOne />
+        {/* <ChartOne /> */}
         <ChartTwo />
         <ChartThree />
       </div>
@@ -19,4 +19,4 @@ const Chart: React.FC = () => {
   );
 };
 
-export default Chart;
+export default DataBarang;
