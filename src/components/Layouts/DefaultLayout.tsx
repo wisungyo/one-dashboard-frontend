@@ -2,12 +2,14 @@
 import React, { useState, ReactNode } from "react";
 import Sidebar from "@/components/Sidebar";
 import Header from "@/components/Header";
+import useAuth from "@/hooks/useAuth";
 
 export default function DefaultLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const { isLoading } = useAuth();
   const [sidebarOpen, setSidebarOpen] = useState(false);
   return (
     <>
@@ -26,7 +28,7 @@ export default function DefaultLayout({
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
             <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
-              {children}
+              {!isLoading ? children : null}
             </div>
           </main>
           {/* <!-- ===== Main Content End ===== --> */}

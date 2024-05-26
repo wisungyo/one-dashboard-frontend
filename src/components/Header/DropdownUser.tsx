@@ -1,12 +1,24 @@
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { apiAuthSignout } from "@/api/auth";
+import { useRouter } from "next/navigation";
 
 const DropdownUser = () => {
+  const router = useRouter();
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const trigger = useRef<any>(null);
   const dropdown = useRef<any>(null);
+
+  const username =
+    (localStorage.getItem("user") as string) &&
+    JSON.parse(localStorage.getItem("user") as string).name;
+  const avatar =
+    (localStorage.getItem("user") as string) &&
+    JSON.parse(localStorage.getItem("user") as string).avatar;
+
+  console.log(avatar, username);
 
   // close on click outside
   useEffect(() => {
@@ -34,26 +46,50 @@ const DropdownUser = () => {
     return () => document.removeEventListener("keydown", keyHandler);
   });
 
+  useEffect(() => {}, [localStorage.getItem("user")]);
+
+  const handleSignOut = async () => {
+    const response = await apiAuthSignout();
+
+    if (response.status === 200) {
+      const data = await response.json();
+      console.log(data);
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      router.replace("/auth/signin");
+    } else {
+      const data = await response.json();
+      console.error(data);
+    }
+  };
+
+  const handleToogleDropdown = () => {
+    const token = localStorage.getItem("token");
+    token && setDropdownOpen(!dropdownOpen);
+  };
+
   return (
     <div className="relative">
       <Link
         ref={trigger}
-        onClick={() => setDropdownOpen(!dropdownOpen)}
+        onClick={handleToogleDropdown}
         className="flex items-center gap-4"
         href="#"
       >
-        <span className="hidden text-right lg:block">
-          <span className="block text-sm font-medium text-black dark:text-white">
-            Thomas Anree
+        {username && (
+          <span className="hidden text-right lg:block">
+            <span className="block text-sm font-medium text-black dark:text-white">
+              {username}
+            </span>
+            <span className="block text-xs">Admin</span>
           </span>
-          <span className="block text-xs">UX Designer</span>
-        </span>
+        )}
 
         <span className="h-12 w-12 rounded-full">
           <Image
             width={112}
             height={112}
-            src={"/images/user/user-01.png"}
+            src={avatar || "/images/user/user.png"}
             style={{
               width: "auto",
               height: "auto",
@@ -114,7 +150,7 @@ const DropdownUser = () => {
               My Profile
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link
               href="#"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
@@ -134,8 +170,8 @@ const DropdownUser = () => {
               </svg>
               My Contacts
             </Link>
-          </li>
-          <li>
+          </li> */}
+          {/* <li>
             <Link
               href="/settings"
               className="flex items-center gap-3.5 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
@@ -159,9 +195,12 @@ const DropdownUser = () => {
               </svg>
               Account Settings
             </Link>
-          </li>
+          </li> */}
         </ul>
-        <button className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base">
+        <button
+          className="flex items-center gap-3.5 px-6 py-4 text-sm font-medium duration-300 ease-in-out hover:text-primary lg:text-base"
+          onClick={handleSignOut}
+        >
           <svg
             className="fill-current"
             width="22"

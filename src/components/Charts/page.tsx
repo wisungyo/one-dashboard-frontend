@@ -4,8 +4,11 @@ import ChartOne from "@/components/Charts/ChartOne";
 import ChartTwo from "@/components/Charts/ChartTwo";
 import ChartThree from "@/components/Charts/ChartThree";
 import React from "react";
+import useAuth from "@/hooks/useAuth";
 
 const Chart: React.FC = () => {
+  useAuth();
+
   return (
     <>
       <Breadcrumb pageName="Data Barang" />

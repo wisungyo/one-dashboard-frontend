@@ -1,135 +1,65 @@
 import { ApexOptions } from "apexcharts";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import ReactApexChart from "react-apexcharts";
 
-const options: ApexOptions = {
-  colors: ["#3C50E0", "#80CAEE"],
-  chart: {
-    fontFamily: "Satoshi, sans-serif",
-    type: "bar",
-    height: 335,
-    stacked: true,
-    toolbar: {
-      show: false,
-    },
-    zoom: {
-      enabled: false,
-    },
-  },
+const DEFAULT_DATA = [
+  230, 180, 290, 140, 200, 220, 270, 180, 150, 280, 210, 240, 160, 260, 170,
+  190, 220, 250, 290, 130, 180, 270, 300, 200, 170, 250, 240, 290, 140, 170,
+];
 
-  responsive: [
-    {
-      breakpoint: 1536,
-      options: {
-        plotOptions: {
-          bar: {
-            borderRadius: 0,
-            columnWidth: "25%",
-          },
-        },
-      },
-    },
-  ],
-  plotOptions: {
-    bar: {
-      horizontal: false,
-      borderRadius: 0,
-      columnWidth: "25%",
-      borderRadiusApplication: "end",
-      borderRadiusWhenStacked: "last",
-    },
-  },
-  dataLabels: {
-    enabled: false,
-  },
-
-  xaxis: {
-    categories: [
-      "1",
-      "2",
-      "3",
-      "4",
-      "5",
-      "6",
-      "7",
-      "8",
-      "9",
-      "10",
-      "11",
-      "12",
-      "13",
-      "14",
-      "15",
-      "16",
-      "17",
-      "18",
-      "19",
-      "20",
-      "21",
-      "22",
-      "23",
-      "24",
-      "25",
-      "26",
-      "27",
-      "28",
-      "29",
-      "30",
-    ],
-  },
-  legend: {
-    position: "top",
-    horizontalAlign: "left",
-    fontFamily: "Satoshi",
-    fontWeight: 500,
-    fontSize: "14px",
-
-    markers: {
-      radius: 99,
-    },
-  },
-  fill: {
-    opacity: 1,
-  },
-};
-
-interface ChartTwoState {
+export type ChartTwoState = {
   series: {
     name: string;
     data: number[];
   }[];
-}
+};
 
-const ChartTwo: React.FC = () => {
+type TypeChartTwo = {
+  ydata: any[];
+  xdata: any[];
+  title: string;
+};
+
+const ChartTwo = ({ ydata = [], xdata = [], title }: TypeChartTwo) => {
   const [state, setState] = useState<ChartTwoState>({
     series: [
       {
-        name: "Sales",
-        data: [
-          230, 180, 290, 140, 200, 220, 270, 180, 150, 280, 210, 240, 160, 260,
-          170, 190, 220, 250, 290, 130, 180, 270, 300, 200, 170, 250, 240, 290,
-          140, 170,
-        ],
+        name: "Penjualan",
+        data: [],
       },
     ],
   });
+  const [xaxis, setXaxis] = useState<string[]>([]);
 
-  const handleReset = () => {
-    setState((prevState) => ({
-      ...prevState,
-    }));
-  };
-  handleReset;
+  useEffect(() => {
+    console.log("check:", ydata);
+    setState({
+      series: [
+        {
+          name: "Penjualan",
+          data: ydata.length > 0 ? ydata : [],
+        },
+      ],
+    });
+    setXaxis(xdata);
+  }, [ydata, xdata]);
+
+  // const handleReset = () => {
+  //   setState((prevState) => ({
+  //     ...prevState,
+  //   }));
+  // };
+  // handleReset;
 
   return (
     <div className="col-span-12 rounded-sm border border-stroke bg-white p-7.5 shadow-default dark:border-strokedark dark:bg-boxdark xl:col-span-12">
       <div className="mb-4 justify-between gap-4 sm:flex">
         <div>
           <h4 className="text-xl font-semibold text-black dark:text-white">
-            Profit this week
+            {title}
           </h4>
         </div>
-        <div>
+        {/* <div>
           <div className="relative z-20 inline-block">
             <select
               name="#"
@@ -164,13 +94,71 @@ const ChartTwo: React.FC = () => {
               </svg>
             </span>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div>
         <div id="chartTwo" className="-mb-9 -ml-5">
           <ReactApexChart
-            options={options}
+            options={{
+              colors: ["#3C50E0", "#80CAEE"],
+              chart: {
+                fontFamily: "Satoshi, sans-serif",
+                type: "bar",
+                height: 335,
+                stacked: true,
+                toolbar: {
+                  show: false,
+                },
+                zoom: {
+                  enabled: false,
+                },
+              },
+
+              responsive: [
+                {
+                  breakpoint: 1536,
+                  options: {
+                    plotOptions: {
+                      bar: {
+                        borderRadius: 0,
+                        columnWidth: "25%",
+                      },
+                    },
+                  },
+                },
+              ],
+              plotOptions: {
+                bar: {
+                  horizontal: false,
+                  borderRadius: 0,
+                  columnWidth: "25%",
+                  borderRadiusApplication: "end",
+                  borderRadiusWhenStacked: "last",
+                },
+              },
+              dataLabels: {
+                enabled: false,
+              },
+
+              xaxis: {
+                categories: xaxis,
+              },
+              legend: {
+                position: "top",
+                horizontalAlign: "left",
+                fontFamily: "Satoshi",
+                fontWeight: 500,
+                fontSize: "14px",
+
+                markers: {
+                  radius: 99,
+                },
+              },
+              fill: {
+                opacity: 1,
+              },
+            }}
             series={state.series}
             type="bar"
             height={350}
