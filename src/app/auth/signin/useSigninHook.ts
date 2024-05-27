@@ -22,7 +22,7 @@ export const useSigninHook = () => {
       localStorage.setItem("user", JSON.stringify(data.data.user));
       setErrorMessage("");
       setLoading(false);
-      router.push("/");
+      window.location.href = "/";
     } else {
       const data = await response.json();
       console.error(data);
