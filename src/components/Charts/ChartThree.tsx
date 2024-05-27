@@ -102,19 +102,21 @@ const ChartThree = ({ data }: TypeChartThree) => {
       </div>
 
       <div className="-mx-8 flex flex-wrap items-center justify-center gap-y-3">
-        {data.map((category: any, index: number) => (
-          <div key={index} className="w-full px-8 sm:w-1/2">
-            <div className="flex w-full items-center">
-              {/* <span
+        {data.length > 0
+          ? data.map((category: any, index: number) => (
+              <div key={index} className="w-full px-8 sm:w-1/2">
+                <div className="flex w-full items-center">
+                  {/* <span
                   className={`mr-2 block h-3 w-full max-w-3 rounded-full`}
                 ></span> */}
-              <p className="flex w-full items-center justify-between gap-1 text-sm font-medium text-black dark:text-white">
-                <span>{category.name}</span>
-                <span>{category.percentage}%</span>
-              </p>
-            </div>
-          </div>
-        ))}
+                  <p className="flex w-full items-center justify-between gap-1 text-sm font-medium text-black dark:text-white">
+                    <span>{category.name}</span>
+                    <span>{category.percentage}%</span>
+                  </p>
+                </div>
+              </div>
+            ))
+          : null}
       </div>
     </div>
   );
