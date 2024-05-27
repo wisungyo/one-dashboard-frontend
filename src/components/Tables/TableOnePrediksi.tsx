@@ -49,7 +49,7 @@ export type TypeChartOne = {
   data: any[];
 };
 
-const TableOne = ({ title, data = [] }: TypeChartOne) => {
+const TableOnePrediksi = ({ title, data = [] }: TypeChartOne) => {
   return (
     <div className="rounded-sm border border-stroke bg-white pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark xl:pb-1">
       <h4 className="mb-6 px-5 text-xl font-semibold text-black dark:text-white sm:px-7.5">
@@ -57,7 +57,7 @@ const TableOne = ({ title, data = [] }: TypeChartOne) => {
       </h4>
 
       <div className="flex flex-col">
-        <div className="grid grid-cols-[1fr_1fr_1fr] rounded-sm border-y border-stroke dark:border-strokedark sm:grid-cols-[2fr_1fr_1fr_1fr_1fr]">
+        <div className="grid grid-cols-[1fr_1fr_1fr] items-center rounded-sm border-y border-stroke dark:border-strokedark sm:grid-cols-[2fr_1fr_1fr_2fr_1fr_1fr]">
           <div className="flex justify-center  p-2.5 xl:p-5">
             <h5 className="text-sm font-medium xsm:text-base">Nama Produk</h5>
           </div>
@@ -67,18 +67,25 @@ const TableOne = ({ title, data = [] }: TypeChartOne) => {
           <div className="hidden p-2.5 text-center sm:block xl:p-5">
             <h5 className="text-sm font-medium xsm:text-base">Harga</h5>
           </div>
+          <div className="hidden p-2.5 text-center sm:block xl:p-5">
+            <h5 className="text-sm font-medium xsm:text-base">
+              Penjualan 3 Bulan Terakhir
+            </h5>
+          </div>
           <div className="p-2.5 text-center sm:block xl:p-5">
-            <h5 className="text-sm font-medium xsm:text-base">Terjual</h5>
+            <h5 className="text-sm font-medium xsm:text-base">Stok Saat Ini</h5>
           </div>
           <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium xsm:text-base">Total</h5>
+            <h5 className="text-sm font-medium xsm:text-base">
+              Stok Bulan Depan
+            </h5>
           </div>
         </div>
 
         {data.map((data, key) => (
           <div
-            className={`grid grid-cols-[1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr_1fr] ${
-              key === brandData.length - 1
+            className={`grid grid-cols-[1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_2fr_1fr_1fr] ${
+              key === data.length - 1
                 ? ""
                 : "border-b border-stroke dark:border-strokedark"
             }`}
@@ -87,7 +94,7 @@ const TableOne = ({ title, data = [] }: TypeChartOne) => {
             <div className="flex items-center justify-center gap-3 p-2.5 sm:justify-self-start xl:p-5">
               <div className="flex-shrink-0">
                 <Image
-                  src={data.avatar || "/images/product/product.png"}
+                  src={data.image || "/images/product/product.png"}
                   alt="Brand"
                   width={48}
                   height={48}
@@ -100,31 +107,51 @@ const TableOne = ({ title, data = [] }: TypeChartOne) => {
 
             <div className="flex items-center justify-center p-2.5 xl:p-5">
               <p className="text-center text-black dark:text-white">
-                {data.product?.category?.description}
-              </p>
-            </div>
-
-            <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-              <p className="text-center text-black dark:text-white">
-                Rp{" "}
-                {Math.floor(data.product?.price)
-                  .toLocaleString()
-                  .replace(/,/g, ".")}
-              </p>
-            </div>
-
-            <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-              <p className="text-center text-black dark:text-white">
-                {data.total_sold}
+                {data.product.category.name}
               </p>
             </div>
 
             <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-center text-meta-3">
+              <p className="text-black dark:text-white">
                 Rp{" "}
-                {Math.floor(data.total_price)
+                {Math.floor(data.product.price)
                   .toLocaleString()
                   .replace(/,/g, ".")}
+              </p>
+            </div>
+
+            <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+              <p className="flex flex-row gap-1 text-center text-black dark:text-white">
+                {data.sold_summary.map((sold: any, index: number) => (
+                  <div key={index} className="flex flex-row items-center gap-1">
+                    <p>{sold.sold}</p>
+                    <p
+                      className={`${sold.increase_sold_percentage > 0 ? "text-green-500" : "text-rose-500"} text-xs`}
+                    >
+                      {Math.abs(sold.increase_sold_percentage)}%
+                    </p>
+                    {index !== data.sold_summary.length - 1 ? (
+                      <Image
+                        src={"/images/icon/icon-arrow-right.svg"}
+                        width={8}
+                        height={8}
+                        alt="Arrow Prediction"
+                      />
+                    ) : null}
+                  </div>
+                ))}
+              </p>
+            </div>
+
+            <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+              <p className="text-black dark:text-white">
+                {data.product.quantity}
+              </p>
+            </div>
+
+            <div className="flex items-center justify-center gap-2 p-2.5 xl:p-5">
+              <p className="text-black dark:text-white">
+                {Math.floor(data.predictions?.[2]?.prediction_next_month)}
               </p>
             </div>
           </div>
@@ -134,4 +161,4 @@ const TableOne = ({ title, data = [] }: TypeChartOne) => {
   );
 };
 
-export default TableOne;
+export default TableOnePrediksi;

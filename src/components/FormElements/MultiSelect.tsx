@@ -96,14 +96,19 @@ const MultiSelect: React.FC<DropdownProps> = ({ id }) => {
   return (
     <div className="relative z-50">
       <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-        Multiselect Dropdown
+        Kategori
       </label>
       <div>
         <select className="hidden" id={id}>
-          <option value="1">Option 2</option>
-          <option value="2">Option 3</option>
-          <option value="3">Option 4</option>
-          <option value="4">Option 5</option>
+          <option value="1">Barang-barang Kerajinan Tangan dan DIY</option>
+          <option value="2">Mainan dan Hobi</option>
+          <option value="3">Elektronik dan Gadget</option>
+          <option value="4">Makanan dan Minuman</option>
+          <option value="4">Barang Antik dan Koleksi</option>
+          <option value="4">Fashion dan Busana</option>
+          <option value="4">Perhiasan dan Aksesoris</option>
+          <option value="4">Perlengkapan Rumah Tangga</option>
+          <option value="4">Kesehatan dan Kecantikan</option>
         </select>
 
         <div className="flex flex-col items-center">
@@ -149,7 +154,7 @@ const MultiSelect: React.FC<DropdownProps> = ({ id }) => {
                     {selected.length === 0 && (
                       <div className="flex-1">
                         <input
-                          placeholder="Select an option"
+                          placeholder="Pilih Kategori"
                           className="h-full w-full appearance-none bg-transparent p-1 px-2 outline-none"
                           defaultValue={selectedValues()}
                         />

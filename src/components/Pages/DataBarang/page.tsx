@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import TableOneDataBarang from "../Tables/TableOneDataBarang";
+import TableOneDataBarang from "../../Tables/TableOneDataBarang";
 import { useDatangBarangHook } from "@/hooks/pageHooks/useDatangBarangHook";
 
 const DataBarang: React.FC = () => {
@@ -37,7 +37,7 @@ const DataBarang: React.FC = () => {
 
       <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
         <div className="col-span-12">
-          <TableOneDataBarang data={product} title="Produk Terbaik" />
+          <TableOneDataBarang data={product} title="" />
           <div className="mt-4 flex flex-row items-center justify-between">
             <p>Menampilkan 1 - 10 dari total 29 data</p>
             <div className="flex flex-row items-center gap-2">

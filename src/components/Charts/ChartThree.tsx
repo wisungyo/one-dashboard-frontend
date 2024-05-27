@@ -108,7 +108,7 @@ const ChartThree = ({ data }: TypeChartThree) => {
               {/* <span
                   className={`mr-2 block h-3 w-full max-w-3 rounded-full`}
                 ></span> */}
-              <p className="flex w-full items-center justify-between text-sm font-medium text-black dark:text-white">
+              <p className="flex w-full items-center justify-between gap-1 text-sm font-medium text-black dark:text-white">
                 <span>{category.name}</span>
                 <span>{category.percentage}%</span>
               </p>
