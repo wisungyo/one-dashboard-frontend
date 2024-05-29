@@ -1,8 +1,8 @@
-import { getProduct } from "@/api/product";
 import { useEffect, useState } from "react";
+import { getProduct } from "@/api/product";
 
 export const useDatangBarangHook = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [category_id, setCategory_id] = useState("");
   const [code, setCode] = useState("");
   const [name, setName] = useState("");
@@ -14,14 +14,14 @@ export const useDatangBarangHook = () => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [product, setProduct] = useState([]);
+  const [totalPage, setTotalPage] = useState(0);
+  const [totalProduct, setTotalProduct] = useState(0);
 
   useEffect(() => {
     handleGetProduct();
-  }, []);
+  }, [page]);
 
   const handleGetProduct = async () => {
-    setLoading(true);
-
     const params = {
       category_id: category_id,
       code: code,
@@ -36,40 +36,63 @@ export const useDatangBarangHook = () => {
     };
 
     const response = await getProduct(params);
-    const data = await response.json();
 
     if (response.status === 200) {
-      console.log(data);
+      const data = await response.json();
       setProduct(data.data);
+      setTotalPage(data.pagination.total_page);
+      setTotalProduct(data.pagination.total);
       setLoading(false);
     } else {
-      console.error(data);
+      setLoading(false);
+      console.error("Failed to fetch product");
     }
   };
 
+  const handleSearch = () => {
+    console.log(name);
+    setPage(1);
+    handleGetProduct();
+  };
+
+  const handleNextPage = () => {
+    if (page === totalPage) return;
+    setPage((prev) => prev + 1);
+  };
+
+  const handlePrevPage = () => {
+    if (page === 1) return;
+    setPage((prev) => prev - 1);
+  };
+
   return {
-    loading,
-    category_id,
     code,
     name,
-    description,
-    price,
-    quantity,
     sort,
-    sort_by,
-    limit,
     page,
+    limit,
+    price,
     product,
-    setLoading,
-    setCategory_id,
+    sort_by,
+    loading,
+    quantity,
+    totalPage,
+    category_id,
+    description,
+    totalProduct,
+    setPage,
     setCode,
     setName,
-    setDescription,
-    setPrice,
-    setQuantity,
     setSort,
-    setSort_by,
+    setPrice,
     setLimit,
-    setPage,
+    setSort_by,
+    setLoading,
+    setQuantity,
+    handleSearch,
+    setDescription,
+    setCategory_id,
+    handleNextPage,
+    handlePrevPage,
   };
 };

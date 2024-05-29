@@ -1,35 +1,45 @@
 "use client";
-import React from "react";
-import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
-import TableOneDataBarang from "../../Tables/TableOneDataBarang";
 import { useDatangBarangHook } from "@/hooks/pageHooks/useDatangBarangHook";
+import TableOneDataBarang from "../../Tables/TableOneDataBarang";
+import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
+import Loader2 from "@/components/common/Loader2";
+import React from "react";
 
 const DataBarang: React.FC = () => {
   const {
-    loading,
-    category_id,
     code,
     name,
-    description,
-    price,
-    quantity,
     sort,
-    sort_by,
-    limit,
     page,
+    limit,
+    price,
     product,
-    setLoading,
-    setCategory_id,
+    sort_by,
+    loading,
+    quantity,
+    totalPage,
+    category_id,
+    description,
+    totalProduct,
+    setPage,
     setCode,
     setName,
-    setDescription,
-    setPrice,
-    setQuantity,
     setSort,
-    setSort_by,
+    setPrice,
     setLimit,
-    setPage,
+    setSort_by,
+    setLoading,
+    setQuantity,
+    handleSearch,
+    setDescription,
+    setCategory_id,
+    handleNextPage,
+    handlePrevPage,
   } = useDatangBarangHook();
+
+  if (loading) {
+    return <Loader2 />;
+  }
 
   return (
     <>
@@ -37,11 +47,22 @@ const DataBarang: React.FC = () => {
 
       <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
         <div className="col-span-12">
-          <TableOneDataBarang data={product} title="" />
+          <TableOneDataBarang
+            data={product}
+            title=""
+            keyword={name}
+            onChangeSearch={setName}
+            onSearch={handleSearch}
+          />
           <div className="mt-4 flex flex-row items-center justify-between">
-            <p>Menampilkan 1 - 10 dari total 29 data</p>
+            <p>
+              Menampilkan 1 - {product.length} dari total {totalProduct} data
+            </p>
             <div className="flex flex-row items-center gap-2">
-              <button className="flex justify-center rounded  border border-stroke bg-white px-2 py-2 font-medium hover:bg-opacity-90">
+              <button
+                className="flex justify-center rounded  border border-stroke bg-white px-2 py-2 font-medium hover:bg-opacity-90"
+                onClick={handlePrevPage}
+              >
                 <svg
                   width="18"
                   height="18"
@@ -55,7 +76,10 @@ const DataBarang: React.FC = () => {
                   ></path>
                 </svg>
               </button>
-              <button className="flex justify-center rounded  border border-stroke bg-white px-2 py-2 font-medium hover:bg-opacity-90">
+              <button
+                className="flex justify-center rounded  border border-stroke bg-white px-2 py-2 font-medium hover:bg-opacity-90"
+                onClick={handleNextPage}
+              >
                 <svg
                   width="18"
                   height="18"

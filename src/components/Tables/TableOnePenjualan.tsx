@@ -47,53 +47,48 @@ const brandData: BRAND[] = [
 export type TypeChartOne = {
   title: string;
   data: any[];
-  keyword?: string;
-  onChangeSearch?: (e: any) => void;
-  onSearch?: () => void;
 };
 
-const TableOneDataBarang = ({
-  title,
-  data = [],
-  keyword = "",
-  onChangeSearch = () => {},
-  onSearch = () => {},
-}: TypeChartOne) => {
+const TableOnePenjualan = ({ title, data = [] }: TypeChartOne) => {
   return (
     <div className="rounded-sm border border-stroke bg-white pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark xl:pb-1">
-      <div className="flex flex-row gap-4 px-4 pb-4">
-        <div className="w-1/3">
-          <div className="flex items-center rounded-md border border-stroke px-4 py-2.5">
-            <input
-              type="text"
-              placeholder="Masukkan kata kunci ..."
-              className="placeholder-gray-400 dark:placeholder-gray-500 w-full bg-white text-sm text-black focus:outline-none dark:border-strokedark dark:bg-boxdark dark:text-white dark:focus:ring-primary dark:focus:ring-opacity-50"
-              value={keyword}
-              onChange={(e) => onChangeSearch(e.target.value as string)}
-            />
-            <button className="ml-2 flex-shrink-0">
-              <Image
-                src="/images/icon/icon-search.svg"
-                alt="Search"
-                className="h-4 w-4"
-                width={16}
-                height={16}
+      <div className="mb-4 flex flex-col items-center justify-between gap-x-2 sm:flex-row">
+        <h4 className="text-xl font-semibold text-black dark:text-white sm:px-7.5">
+          {title}
+        </h4>
+
+        <div className="flex w-2/3 flex-row gap-4 px-4">
+          <div className="flex-1">
+            <div className="flex items-center rounded-md border border-stroke px-4 py-2.5">
+              <input
+                type="text"
+                placeholder="Masukkan kata kunci ..."
+                className="placeholder-gray-400 dark:placeholder-gray-500 w-full bg-white text-sm text-black focus:outline-none dark:border-strokedark dark:bg-boxdark dark:text-white dark:focus:ring-primary dark:focus:ring-opacity-50"
               />
+              <button className="ml-2 flex-shrink-0">
+                <Image
+                  src="/images/icon/icon-search.svg"
+                  alt="Search"
+                  className="h-4 w-4"
+                  width={16}
+                  height={16}
+                />
+              </button>
+            </div>
+          </div>
+          <div>
+            <button
+              className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
+              type="submit"
+            >
+              Tambah
             </button>
           </div>
-        </div>
-        <div>
-          <button
-            className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
-            onClick={onSearch}
-          >
-            Cari
-          </button>
         </div>
       </div>
 
       <div className="flex flex-col">
-        <div className="grid grid-cols-[1fr_1fr_1fr] rounded-sm border-y border-stroke dark:border-strokedark sm:grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr]">
+        <div className="grid grid-cols-[2fr_1fr_1fr] rounded-sm border-y border-stroke dark:border-strokedark sm:grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr]">
           <div className="flex justify-center  p-2.5 xl:p-5">
             <h5 className="text-sm font-medium xsm:text-base">Nama Produk</h5>
           </div>
@@ -110,11 +105,11 @@ const TableOneDataBarang = ({
             <h5 className="text-sm font-medium xsm:text-base">Stok</h5>
           </div>
           <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium xsm:text-base">Action</h5>
+            <h5 className="text-sm font-medium xsm:text-base">Total</h5>
           </div>
         </div>
 
-        {data.length > 0 ? (
+        {data.length > 1 ? (
           data.map((data, key) => (
             <div
               className={`grid grid-cols-[1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr_1fr_1fr] ${
@@ -244,6 +239,7 @@ const TableOneDataBarang = ({
         ) : (
           <div className="flex h-40 flex-col items-center justify-center p-4">
             <span>Data kosong.</span>
+            <span>Tambahkan produk terlebih dahulu.</span>
           </div>
         )}
       </div>
@@ -251,4 +247,4 @@ const TableOneDataBarang = ({
   );
 };
 
-export default TableOneDataBarang;
+export default TableOnePenjualan;

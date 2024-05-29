@@ -6,10 +6,15 @@ import { useDatangBarangHook } from "@/hooks/pageHooks/useDatangBarangHook";
 import TableOne from "@/components/Tables/TableOne";
 import TableOnePrediksi from "@/components/Tables/TableOnePrediksi";
 import { usePrediksiHooks } from "@/hooks/pageHooks/usePrediksiHooks";
+import Loader2 from "@/components/common/Loader2";
 
 const Prediksi: React.FC = () => {
   const { loading, year, month, prediction, handleGetPrediction } =
     usePrediksiHooks();
+
+  if (loading) {
+    return <Loader2 />;
+  }
 
   return (
     <>

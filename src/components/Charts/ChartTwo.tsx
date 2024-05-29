@@ -32,7 +32,6 @@ const ChartTwo = ({ ydata = [], xdata = [], title }: TypeChartTwo) => {
   const [xaxis, setXaxis] = useState<string[]>([]);
 
   useEffect(() => {
-    console.log("check:", ydata);
     setState({
       series: [
         {

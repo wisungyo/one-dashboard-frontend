@@ -75,62 +75,66 @@ const TableOne = ({ title, data = [] }: TypeChartOne) => {
           </div>
         </div>
 
-        {data.length > 0
-          ? data.map((data, key) => (
-              <div
-                className={`grid grid-cols-[1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr_1fr] ${
-                  key === brandData.length - 1
-                    ? ""
-                    : "border-b border-stroke dark:border-strokedark"
-                }`}
-                key={key}
-              >
-                <div className="flex items-center justify-center gap-3 p-2.5 sm:justify-self-start xl:p-5">
-                  <div className="flex-shrink-0">
-                    <Image
-                      src={data.avatar || "/images/product/product.png"}
-                      alt="Brand"
-                      width={48}
-                      height={48}
-                    />
-                  </div>
-                  <p className="hidden text-black dark:text-white sm:block">
-                    {data.product.name}
-                  </p>
+        {data.length > 0 ? (
+          data.map((data, key) => (
+            <div
+              className={`grid grid-cols-[1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_1fr_1fr] ${
+                key === brandData.length - 1
+                  ? ""
+                  : "border-b border-stroke dark:border-strokedark"
+              }`}
+              key={key}
+            >
+              <div className="flex items-center justify-center gap-3 p-2.5 sm:justify-self-start xl:p-5">
+                <div className="flex-shrink-0">
+                  <Image
+                    src={data.avatar || "/images/product/product.png"}
+                    alt="Brand"
+                    width={48}
+                    height={48}
+                  />
                 </div>
-
-                <div className="flex items-center justify-center p-2.5 xl:p-5">
-                  <p className="text-center text-black dark:text-white">
-                    {data.product?.category?.description}
-                  </p>
-                </div>
-
-                <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                  <p className="text-center text-black dark:text-white">
-                    Rp{" "}
-                    {Math.floor(data.product?.price)
-                      .toLocaleString()
-                      .replace(/,/g, ".")}
-                  </p>
-                </div>
-
-                <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                  <p className="text-center text-black dark:text-white">
-                    {data.total_sold}
-                  </p>
-                </div>
-
-                <div className="flex items-center justify-center p-2.5 xl:p-5">
-                  <p className="text-center text-meta-3">
-                    Rp{" "}
-                    {Math.floor(data.total_price)
-                      .toLocaleString()
-                      .replace(/,/g, ".")}
-                  </p>
-                </div>
+                <p className="hidden text-black dark:text-white sm:block">
+                  {data.product.name}
+                </p>
               </div>
-            ))
-          : null}
+
+              <div className="flex items-center justify-center p-2.5 xl:p-5">
+                <p className="text-center text-black dark:text-white">
+                  {data.product?.category?.description}
+                </p>
+              </div>
+
+              <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+                <p className="text-center text-black dark:text-white">
+                  Rp{" "}
+                  {Math.floor(data.product?.price)
+                    .toLocaleString()
+                    .replace(/,/g, ".")}
+                </p>
+              </div>
+
+              <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+                <p className="text-center text-black dark:text-white">
+                  {data.total_sold}
+                </p>
+              </div>
+
+              <div className="flex items-center justify-center p-2.5 xl:p-5">
+                <p className="text-center text-meta-3">
+                  Rp{" "}
+                  {Math.floor(data.total_price)
+                    .toLocaleString()
+                    .replace(/,/g, ".")}
+                </p>
+              </div>
+            </div>
+          ))
+        ) : (
+          <div className="flex h-40 flex-col items-center justify-center p-4">
+            <span>Data kosong.</span>
+          </div>
+        )}
       </div>
     </div>
   );

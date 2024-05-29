@@ -82,80 +82,89 @@ const TableOnePrediksi = ({ title, data = [] }: TypeChartOne) => {
           </div>
         </div>
 
-        {data.map((data, key) => (
-          <div
-            className={`grid grid-cols-[1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_2fr_1fr_1fr] ${
-              key === data.length - 1
-                ? ""
-                : "border-b border-stroke dark:border-strokedark"
-            }`}
-            key={key}
-          >
-            <div className="flex items-center justify-center gap-3 p-2.5 sm:justify-self-start xl:p-5">
-              <div className="flex-shrink-0">
-                <Image
-                  src={data.image || "/images/product/product.png"}
-                  alt="Brand"
-                  width={48}
-                  height={48}
-                />
+        {data.length > 0 ? (
+          data.map((data, key) => (
+            <div
+              className={`grid grid-cols-[1fr_1fr_1fr] sm:grid-cols-[2fr_1fr_1fr_2fr_1fr_1fr] ${
+                key === data.length - 1
+                  ? ""
+                  : "border-b border-stroke dark:border-strokedark"
+              }`}
+              key={key}
+            >
+              <div className="flex items-center justify-center gap-3 p-2.5 sm:justify-self-start xl:p-5">
+                <div className="flex-shrink-0">
+                  <Image
+                    src={data.image || "/images/product/product.png"}
+                    alt="Brand"
+                    width={48}
+                    height={48}
+                  />
+                </div>
+                <p className="hidden text-black dark:text-white sm:block">
+                  {data.product.name}
+                </p>
               </div>
-              <p className="hidden text-black dark:text-white sm:block">
-                {data.product.name}
-              </p>
-            </div>
 
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-center text-black dark:text-white">
-                {data.product.category.name}
-              </p>
-            </div>
+              <div className="flex items-center justify-center p-2.5 xl:p-5">
+                <p className="text-center text-black dark:text-white">
+                  {data.product.category.name}
+                </p>
+              </div>
 
-            <div className="flex items-center justify-center p-2.5 xl:p-5">
-              <p className="text-black dark:text-white">
-                Rp{" "}
-                {Math.floor(data.product.price)
-                  .toLocaleString()
-                  .replace(/,/g, ".")}
-              </p>
-            </div>
+              <div className="flex items-center justify-center p-2.5 xl:p-5">
+                <p className="text-black dark:text-white">
+                  Rp{" "}
+                  {Math.floor(data.product.price)
+                    .toLocaleString()
+                    .replace(/,/g, ".")}
+                </p>
+              </div>
 
-            <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-              <p className="flex flex-row gap-1 text-center text-black dark:text-white">
-                {data.sold_summary.map((sold: any, index: number) => (
-                  <div key={index} className="flex flex-row items-center gap-1">
-                    <p>{sold.sold}</p>
-                    <p
-                      className={`${sold.increase_sold_percentage > 0 ? "text-green-500" : "text-rose-500"} text-xs`}
+              <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+                <p className="flex flex-row gap-1 text-center text-black dark:text-white">
+                  {data.sold_summary.map((sold: any, index: number) => (
+                    <div
+                      key={index}
+                      className="flex flex-row items-center gap-1"
                     >
-                      {Math.abs(sold.increase_sold_percentage)}%
-                    </p>
-                    {index !== data.sold_summary.length - 1 ? (
-                      <Image
-                        src={"/images/icon/icon-arrow-right.svg"}
-                        width={8}
-                        height={8}
-                        alt="Arrow Prediction"
-                      />
-                    ) : null}
-                  </div>
-                ))}
-              </p>
-            </div>
+                      <p>{sold.sold}</p>
+                      <p
+                        className={`${sold.increase_sold_percentage > 0 ? "text-green-500" : "text-rose-500"} text-xs`}
+                      >
+                        {Math.abs(sold.increase_sold_percentage)}%
+                      </p>
+                      {index !== data.sold_summary.length - 1 ? (
+                        <Image
+                          src={"/images/icon/icon-arrow-right.svg"}
+                          width={8}
+                          height={8}
+                          alt="Arrow Prediction"
+                        />
+                      ) : null}
+                    </div>
+                  ))}
+                </p>
+              </div>
 
-            <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-              <p className="text-black dark:text-white">
-                {data.product.quantity}
-              </p>
-            </div>
+              <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
+                <p className="text-black dark:text-white">
+                  {data.product.quantity}
+                </p>
+              </div>
 
-            <div className="flex items-center justify-center gap-2 p-2.5 xl:p-5">
-              <p className="text-black dark:text-white">
-                {Math.floor(data.predictions?.[2]?.prediction_next_month)}
-              </p>
+              <div className="flex items-center justify-center gap-2 p-2.5 xl:p-5">
+                <p className="text-black dark:text-white">
+                  {Math.floor(data.predictions?.[2]?.prediction_next_month)}
+                </p>
+              </div>
             </div>
+          ))
+        ) : (
+          <div className="flex h-40 flex-col items-center justify-center p-4">
+            <span>Data kosong.</span>
           </div>
-        ))}
+        )}
       </div>
     </div>
   );

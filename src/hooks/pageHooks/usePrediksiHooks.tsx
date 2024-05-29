@@ -2,7 +2,7 @@ import { getPredictions } from "@/api/prediction";
 import { use, useEffect, useState } from "react";
 
 export const usePrediksiHooks = () => {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [year, setYear] = useState("");
   const [month, setMonth] = useState("");
   const [prediction, setPrediction] = useState([]);
@@ -26,14 +26,14 @@ export const usePrediksiHooks = () => {
     };
 
     const response = await getPredictions(params);
-    const data = await response.json();
 
     if (response.status === 200) {
-      console.log(data);
+      const data = await response.json();
       setPrediction(data.data.products_summary);
       setLoading(false);
     } else {
-      console.error(data);
+      setLoading(false);
+      console.error("Failed to fetch prediction");
     }
   };
 

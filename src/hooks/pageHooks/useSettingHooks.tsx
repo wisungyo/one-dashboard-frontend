@@ -16,7 +16,6 @@ export const useSettingHooks = () => {
     const data = await response.json();
 
     if (response.status === 200) {
-      console.log(data);
       setName(data.data.name);
       setEmail(data.data.email);
       setPhoneNumber(data.data.phone_number);
@@ -44,9 +43,7 @@ export const useSettingHooks = () => {
     const data = await response.json();
 
     if (response.status === 200) {
-      console.log("success update", data);
       localStorage.setItem("user", JSON.stringify(data.data));
-      // window.location.reload();
     } else {
       console.error(data);
     }

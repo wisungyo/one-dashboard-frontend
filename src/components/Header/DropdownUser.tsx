@@ -18,8 +18,6 @@ const DropdownUser = () => {
     (localStorage.getItem("user") as string) &&
     JSON.parse(localStorage.getItem("user") as string).avatar;
 
-  console.log(avatar, username);
-
   // close on click outside
   useEffect(() => {
     const clickHandler = ({ target }: MouseEvent) => {
@@ -53,7 +51,6 @@ const DropdownUser = () => {
 
     if (response.status === 200) {
       const data = await response.json();
-      console.log(data);
       localStorage.removeItem("token");
       localStorage.removeItem("user");
       router.replace("/auth/signin");

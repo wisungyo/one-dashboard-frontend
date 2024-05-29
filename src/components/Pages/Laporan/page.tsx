@@ -6,29 +6,37 @@ import { useDatangBarangHook } from "@/hooks/pageHooks/useDatangBarangHook";
 import TableOne from "@/components/Tables/TableOne";
 import TableOneLaporan from "@/components/Tables/TableOneLaporan";
 import { useLaporanHooks } from "@/hooks/pageHooks/useLaporanHooks";
+import Loader2 from "@/components/common/Loader2";
 
 const Laporan: React.FC = () => {
   const {
-    loading,
-    category_id,
     code,
     sort,
-    sort_by,
-    limit,
     page,
-    transaction,
     type,
+    note,
+    limit,
+    loading,
+    sort_by,
+    end_date,
+    totalPage,
+    start_date,
+    product_id,
     total_item,
-    total_quantity,
+    category_id,
+    transaction,
     total_price,
     customer_name,
+    total_quantity,
     customer_phone,
     customer_address,
-    note,
-    start_date,
-    end_date,
-    product_id,
+    handleNextPage,
+    handlePrevPage,
   } = useLaporanHooks();
+
+  if (loading) {
+    return <Loader2 />;
+  }
 
   return (
     <>
@@ -38,9 +46,12 @@ const Laporan: React.FC = () => {
         <div className="col-span-12">
           <TableOneLaporan data={transaction} title="Transaksi Penjualan" />
           <div className="mt-4 flex flex-row items-center justify-between">
-            <p>Menampilkan 1 - 10 dari total 29 data</p>
+            <p>Menampilkan 1 - 10 dari total {totalPage} data</p>
             <div className="flex flex-row items-center gap-2">
-              <button className="flex justify-center rounded  border border-stroke bg-white px-2 py-2 font-medium hover:bg-opacity-90">
+              <button
+                className="flex justify-center rounded  border border-stroke bg-white px-2 py-2 font-medium hover:bg-opacity-90"
+                onClick={handlePrevPage}
+              >
                 <svg
                   width="18"
                   height="18"
@@ -54,7 +65,10 @@ const Laporan: React.FC = () => {
                   ></path>
                 </svg>
               </button>
-              <button className="flex justify-center rounded  border border-stroke bg-white px-2 py-2 font-medium hover:bg-opacity-90">
+              <button
+                className="flex justify-center rounded  border border-stroke bg-white px-2 py-2 font-medium hover:bg-opacity-90"
+                onClick={handleNextPage}
+              >
                 <svg
                   width="18"
                   height="18"

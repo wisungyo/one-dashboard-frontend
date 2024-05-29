@@ -1,14 +1,14 @@
 import { getTransactions } from "@/api/transaction";
 import { useEffect, useState } from "react";
 
-export const useLaporanHooks = () => {
-  const [loading, setLoading] = useState(true);
+export const usePenjualanHooks = () => {
+  const [loading, setLoading] = useState(false);
   const [category_id, setCategory_id] = useState("");
   const [code, setCode] = useState("");
   const [sort, setSort] = useState("");
   const [sort_by, setSort_by] = useState("");
   const [limit, setLimit] = useState("");
-  const [page, setPage] = useState(1);
+  const [page, setPage] = useState("");
   const [transaction, setTransaction] = useState([]);
   const [type, setType] = useState("");
   const [total_item, setTotal_item] = useState("");
@@ -21,13 +21,14 @@ export const useLaporanHooks = () => {
   const [start_date, setStart_date] = useState("");
   const [end_date, setEnd_date] = useState("");
   const [product_id, setProduct_id] = useState("");
-  const [totalPage, setTotalPage] = useState(0);
 
   useEffect(() => {
     handleGetTransaction();
-  }, [page]);
+  }, []);
 
   const handleGetTransaction = async () => {
+    setLoading(true);
+
     const params = {
       category_id: category_id,
       product_id: product_id,
@@ -49,49 +50,15 @@ export const useLaporanHooks = () => {
     };
 
     const response = await getTransactions(params);
+    const data = await response.json();
 
     if (response.status === 200) {
-      const data = await response.json();
       setTransaction(data.data);
       setLoading(false);
     } else {
-      setLoading(false);
-      console.error("Failed to fetch transaction");
+      console.error(data);
     }
   };
 
-  const handleNextPage = () => {
-    if (page === totalPage) return;
-    setPage((prev) => prev + 1);
-  };
-
-  const handlePrevPage = () => {
-    if (page === 1) return;
-    setPage((prev) => prev - 1);
-  };
-
-  return {
-    code,
-    sort,
-    page,
-    type,
-    note,
-    limit,
-    sort_by,
-    loading,
-    end_date,
-    totalPage,
-    start_date,
-    product_id,
-    total_item,
-    category_id,
-    transaction,
-    total_price,
-    customer_name,
-    total_quantity,
-    customer_phone,
-    customer_address,
-    handleNextPage,
-    handlePrevPage,
-  };
+  return {};
 };
