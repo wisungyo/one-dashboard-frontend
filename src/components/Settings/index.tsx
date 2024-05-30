@@ -1,25 +1,31 @@
 "use client";
-import Image from "next/image";
 import { useSettingHooks } from "@/hooks/pageHooks/useSettingHooks";
+import Loader2 from "../common/Loader2";
+import Image from "next/image";
 
 const ContentSettings = () => {
   const {
-    loading,
+    bio,
     name,
     email,
-    phoneNumber,
-    bio,
-    password,
     avatar,
+    loading,
+    password,
+    phoneNumber,
+    setBio,
     setName,
     setEmail,
-    setPhoneNumber,
-    setBio,
-    setPassword,
     setAvatar,
+    setPassword,
+    setPhoneNumber,
+    setAvatarBinary,
     handleGetProfile,
     handleUpdateProfile,
   } = useSettingHooks();
+
+  if (loading) {
+    return <Loader2 />;
+  }
 
   return (
     <div className="grid grid-cols-5 gap-8">
@@ -265,10 +271,20 @@ const ContentSettings = () => {
               className="relative mb-5.5 block w-full cursor-pointer appearance-none rounded border border-dashed border-primary bg-gray px-4 py-4 dark:bg-meta-4 sm:py-7.5"
             >
               <input
-                // this is the file input
                 type="file"
                 accept="image/*"
                 className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
+                onChange={(e: any) => {
+                  const file = e.target.files[0];
+                  const reader = new FileReader();
+                  reader.onloadend = () => {
+                    const blob = new Blob([reader.result as ArrayBuffer], {
+                      type: file.type,
+                    });
+                    setAvatarBinary(blob);
+                  };
+                  reader.readAsArrayBuffer(file);
+                }}
               />
               <div className="flex flex-col items-center justify-center space-y-3">
                 <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">

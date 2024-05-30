@@ -29,6 +29,7 @@ const Laporan: React.FC = () => {
     customer_name,
     total_quantity,
     customer_phone,
+    totalTransaction,
     customer_address,
     handleNextPage,
     handlePrevPage,
@@ -46,7 +47,11 @@ const Laporan: React.FC = () => {
         <div className="col-span-12">
           <TableOneLaporan data={transaction} title="Transaksi Penjualan" />
           <div className="mt-4 flex flex-row items-center justify-between">
-            <p>Menampilkan 1 - 10 dari total {totalPage} data</p>
+            <p>
+              Menampilkan {limit * page - (limit - 1)} -{" "}
+              {limit * (page - 1) + transaction.length} dari total{" "}
+              {totalTransaction} data
+            </p>
             <div className="flex flex-row items-center gap-2">
               <button
                 className="flex justify-center rounded  border border-stroke bg-white px-2 py-2 font-medium hover:bg-opacity-90"

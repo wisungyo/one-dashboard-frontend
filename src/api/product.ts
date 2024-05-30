@@ -23,3 +23,51 @@ export const getProduct = async (data: any) => {
   });
   return response;
 };
+
+export const getProductById = async (id: string) => {
+  const url = `${BASE_URL}${PREFIX}/products/${id}`;
+  const response = fetch(url, {
+    method: "GET",
+    headers: HEADER_AUTH,
+  });
+  return response;
+};
+
+export const createProduct = async (data: any) => {
+  const url = `${BASE_URL}${PREFIX}/products`;
+  const response = fetch(url, {
+    method: "POST",
+    headers: HEADER_AUTH,
+    body: JSON.stringify(data),
+  });
+  return response;
+};
+
+export const updateProduct = async (id: string, data: any) => {
+  const prepData = {
+    category_id: data.category_id,
+    code: data.code,
+    name: data.name,
+    description: data.description,
+    price: data.price,
+    quantity: data.quantity,
+    image: data.image,
+  };
+
+  const url = `${BASE_URL}${PREFIX}/products/${id}`;
+  const response = fetch(url, {
+    method: "PUT",
+    headers: HEADER_AUTH,
+    body: JSON.stringify(prepData),
+  });
+  return response;
+};
+
+export const deleteProduct = async (id: string) => {
+  const url = `${BASE_URL}${PREFIX}/products/${id}`;
+  const response = fetch(url, {
+    method: "DELETE",
+    headers: HEADER_AUTH,
+  });
+  return response;
+};

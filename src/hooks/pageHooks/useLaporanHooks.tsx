@@ -7,7 +7,7 @@ export const useLaporanHooks = () => {
   const [code, setCode] = useState("");
   const [sort, setSort] = useState("");
   const [sort_by, setSort_by] = useState("");
-  const [limit, setLimit] = useState("");
+  const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [transaction, setTransaction] = useState([]);
   const [type, setType] = useState("");
@@ -22,6 +22,7 @@ export const useLaporanHooks = () => {
   const [end_date, setEnd_date] = useState("");
   const [product_id, setProduct_id] = useState("");
   const [totalPage, setTotalPage] = useState(0);
+  const [totalTransaction, setTotalTransaction] = useState(0);
 
   useEffect(() => {
     handleGetTransaction();
@@ -53,6 +54,8 @@ export const useLaporanHooks = () => {
     if (response.status === 200) {
       const data = await response.json();
       setTransaction(data.data);
+      setTotalPage(data.pagination.total_page);
+      setTotalTransaction(data.pagination.total);
       setLoading(false);
     } else {
       setLoading(false);
@@ -90,6 +93,7 @@ export const useLaporanHooks = () => {
     customer_name,
     total_quantity,
     customer_phone,
+    totalTransaction,
     customer_address,
     handleNextPage,
     handlePrevPage,

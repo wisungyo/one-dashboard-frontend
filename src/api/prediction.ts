@@ -4,6 +4,8 @@ export const getPredictions = async (data: any) => {
   const queryParams = [
     data.year && `year=${data.year}`,
     data.month && `month=${data.month}`,
+    data.page && `page=${data.page}`,
+    data.limit && `limit=${data.limit}`,
   ]
     .filter(Boolean)
     .join("&");

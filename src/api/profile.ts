@@ -9,22 +9,21 @@ export const gerProfile = async () => {
 };
 
 export const updateProfile = async (data: any) => {
-  const params = {
-    name: data.name,
-    email: data.email,
-    phone_number: data.phone_number,
-    bio: data.bio,
-    password: data.password,
-    avatar: data.avatar,
-  };
+  const formData = new FormData();
+  formData.append("name", data.name);
+  formData.append("email", data.email);
+  formData.append("phoneNumber", data.phoneNumber);
+  formData.append("bio", data.bio);
+  formData.append("password", data.password);
+  data.avatar && formData.append("file", data.avatar);
 
   const response = fetch(`${BASE_URL}${PREFIX}/profile`, {
     method: "POST",
     headers: {
       ...HEADER_AUTH,
-      "Content-Type": "application/json",
+      "Content-Type": "multipart/form-data",
     },
-    body: JSON.stringify(params),
+    body: formData,
   });
   return response;
 };

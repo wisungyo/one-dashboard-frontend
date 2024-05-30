@@ -9,8 +9,19 @@ import { usePrediksiHooks } from "@/hooks/pageHooks/usePrediksiHooks";
 import Loader2 from "@/components/common/Loader2";
 
 const Prediksi: React.FC = () => {
-  const { loading, year, month, prediction, handleGetPrediction } =
-    usePrediksiHooks();
+  const {
+    year,
+    page,
+    month,
+    limit,
+    loading,
+    totalPage,
+    prediction,
+    totalPrediction,
+    handleNextPage,
+    handlePrevPage,
+    handleGetPrediction,
+  } = usePrediksiHooks();
 
   if (loading) {
     return <Loader2 />;
@@ -24,9 +35,16 @@ const Prediksi: React.FC = () => {
         <div className="col-span-12">
           <TableOnePrediksi data={prediction} title="Hasil Prediksi Stok" />
           <div className="mt-4 flex flex-row items-center justify-between">
-            <p>Menampilkan 1 - 10 dari total 29 data</p>
+            <p>
+              Menampilkan {limit * page - (limit - 1)} -{" "}
+              {limit * (page - 1) + prediction.length} dari total{" "}
+              {totalPrediction} data
+            </p>
             <div className="flex flex-row items-center gap-2">
-              <button className="flex justify-center rounded  border border-stroke bg-white px-2 py-2 font-medium hover:bg-opacity-90">
+              <button
+                className="flex justify-center rounded  border border-stroke bg-white px-2 py-2 font-medium hover:bg-opacity-90"
+                onClick={handlePrevPage}
+              >
                 <svg
                   width="18"
                   height="18"
@@ -40,7 +58,10 @@ const Prediksi: React.FC = () => {
                   ></path>
                 </svg>
               </button>
-              <button className="flex justify-center rounded  border border-stroke bg-white px-2 py-2 font-medium hover:bg-opacity-90">
+              <button
+                className="flex justify-center rounded  border border-stroke bg-white px-2 py-2 font-medium hover:bg-opacity-90"
+                onClick={handleNextPage}
+              >
                 <svg
                   width="18"
                   height="18"

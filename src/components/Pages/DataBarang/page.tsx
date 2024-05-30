@@ -56,7 +56,9 @@ const DataBarang: React.FC = () => {
           />
           <div className="mt-4 flex flex-row items-center justify-between">
             <p>
-              Menampilkan 1 - {product.length} dari total {totalProduct} data
+              Menampilkan {limit * page - (limit - 1)} -{" "}
+              {limit * (page - 1) + product.length} dari total {totalProduct}{" "}
+              data
             </p>
             <div className="flex flex-row items-center gap-2">
               <button
