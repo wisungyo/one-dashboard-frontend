@@ -34,11 +34,20 @@ export const getProductById = async (id: string) => {
 };
 
 export const createProduct = async (data: any) => {
+  const formData = new FormData();
+  formData.append("name", data.name);
+  formData.append("code", data.code);
+  formData.append("price", data.price);
+  formData.append("image", data.image);
+  formData.append("quantity", data.quantity);
+  formData.append("description", data.description);
+  formData.append("category_id", data.category_id);
+
   const url = `${BASE_URL}${PREFIX}/products`;
   const response = fetch(url, {
     method: "POST",
     headers: HEADER_AUTH,
-    body: JSON.stringify(data),
+    body: formData,
   });
   return response;
 };

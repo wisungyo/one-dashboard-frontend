@@ -1,3 +1,4 @@
+import { useDatangBarangHook } from "@/hooks/pageHooks/useDatangBarangHook";
 import { BRAND } from "@/types/brand";
 import Image from "next/image";
 
@@ -45,19 +46,21 @@ const brandData: BRAND[] = [
 ];
 
 export type TypeChartOne = {
-  title: string;
   data: any[];
+  title: string;
   keyword?: string;
-  onChangeSearch?: (e: any) => void;
   onSearch?: () => void;
+  onChangeSearch?: (e: any) => void;
+  handleToggleModal?: (id: string) => void;
 };
 
 const TableOneDataBarang = ({
-  title,
   data = [],
+  title,
   keyword = "",
-  onChangeSearch = () => {},
   onSearch = () => {},
+  onChangeSearch = () => {},
+  handleToggleModal = () => {},
 }: TypeChartOne) => {
   return (
     <div className="rounded-sm border border-stroke bg-white pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark xl:pb-1">
@@ -162,7 +165,10 @@ const TableOneDataBarang = ({
               </div>
 
               <div className="flex items-center justify-center gap-4 p-2.5 xl:p-5">
-                <button className="hover:text-primary">
+                <button
+                  className="hover:text-primary"
+                  onClick={() => handleToggleModal(data.id)}
+                >
                   <svg
                     className="fill-current"
                     width="18"

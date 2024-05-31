@@ -4,6 +4,7 @@ import TableOneDataBarang from "../../Tables/TableOneDataBarang";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Loader2 from "@/components/common/Loader2";
 import React from "react";
+import ConfirmationModal from "@/components/Modal/ConfirmationModal";
 
 const DataBarang: React.FC = () => {
   const {
@@ -20,6 +21,7 @@ const DataBarang: React.FC = () => {
     totalPage,
     category_id,
     description,
+    isModalOpen,
     totalProduct,
     setPage,
     setCode,
@@ -35,6 +37,8 @@ const DataBarang: React.FC = () => {
     setCategory_id,
     handleNextPage,
     handlePrevPage,
+    handleToggleModal,
+    handleDeleteProduct,
   } = useDatangBarangHook();
 
   if (loading) {
@@ -51,8 +55,9 @@ const DataBarang: React.FC = () => {
             data={product}
             title=""
             keyword={name}
-            onChangeSearch={setName}
             onSearch={handleSearch}
+            onChangeSearch={setName}
+            handleToggleModal={handleToggleModal}
           />
           <div className="mt-4 flex flex-row items-center justify-between">
             <p>
@@ -99,6 +104,17 @@ const DataBarang: React.FC = () => {
           </div>
         </div>
       </div>
+
+      {isModalOpen && (
+        <ConfirmationModal
+          message="Apakah anda yakin ingin menghapus data ini?"
+          onConfirm={() => {
+            handleDeleteProduct();
+            handleToggleModal("");
+          }}
+          onCancel={() => handleToggleModal("")}
+        />
+      )}
     </>
   );
 };

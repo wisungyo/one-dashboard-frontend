@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import { getProduct } from "@/api/product";
+import { deleteProduct, getProduct } from "@/api/product";
 
 export const useDatangBarangHook = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [category_id, setCategory_id] = useState("");
   const [code, setCode] = useState("");
@@ -16,6 +17,7 @@ export const useDatangBarangHook = () => {
   const [product, setProduct] = useState([]);
   const [totalPage, setTotalPage] = useState(0);
   const [totalProduct, setTotalProduct] = useState(0);
+  const [id, setId] = useState("");
 
   useEffect(() => {
     handleGetProduct();
@@ -55,6 +57,17 @@ export const useDatangBarangHook = () => {
     handleGetProduct();
   };
 
+  const handleDeleteProduct = async () => {
+    setLoading(true);
+    const response = await deleteProduct(id);
+    if (response.status === 200) {
+      handleGetProduct();
+    } else {
+      setLoading(false);
+      console.error("Failed to delete product");
+    }
+  };
+
   const handleNextPage = () => {
     if (page === totalPage) return;
     setPage((prev) => prev + 1);
@@ -63,6 +76,11 @@ export const useDatangBarangHook = () => {
   const handlePrevPage = () => {
     if (page === 1) return;
     setPage((prev) => prev - 1);
+  };
+
+  const handleToggleModal = (id: string) => {
+    setId(id);
+    setIsModalOpen((prev) => !prev);
   };
 
   return {
@@ -79,6 +97,7 @@ export const useDatangBarangHook = () => {
     totalPage,
     category_id,
     description,
+    isModalOpen,
     totalProduct,
     setPage,
     setCode,
@@ -94,5 +113,7 @@ export const useDatangBarangHook = () => {
     setCategory_id,
     handleNextPage,
     handlePrevPage,
+    handleToggleModal,
+    handleDeleteProduct,
   };
 };
