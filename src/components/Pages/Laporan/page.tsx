@@ -33,6 +33,7 @@ const Laporan: React.FC = () => {
     customer_address,
     handleNextPage,
     handlePrevPage,
+    handleGetDetailTransaction,
   } = useLaporanHooks();
 
   if (loading) {
@@ -45,7 +46,11 @@ const Laporan: React.FC = () => {
 
       <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
         <div className="col-span-12">
-          <TableOneLaporan data={transaction} title="Transaksi Penjualan" />
+          <TableOneLaporan
+            data={transaction}
+            title="Transaksi Penjualan"
+            onShowDetail={handleGetDetailTransaction}
+          />
           <div className="mt-4 flex flex-row items-center justify-between">
             <p>
               Menampilkan {limit * page - (limit - 1)} -{" "}

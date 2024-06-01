@@ -52,6 +52,7 @@ export type TypeChartOne = {
   onSearch?: () => void;
   onChangeSearch?: (e: any) => void;
   handleToggleModal?: (id: string) => void;
+  handleUpdateProduct?: (id: string) => void;
 };
 
 const TableOneDataBarang = ({
@@ -61,6 +62,7 @@ const TableOneDataBarang = ({
   onSearch = () => {},
   onChangeSearch = () => {},
   handleToggleModal = () => {},
+  handleUpdateProduct = () => {},
 }: TypeChartOne) => {
   return (
     <div className="rounded-sm border border-stroke bg-white pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark xl:pb-1">
@@ -130,7 +132,7 @@ const TableOneDataBarang = ({
               <div className="flex items-center justify-center gap-3 p-2.5 sm:justify-self-start xl:p-5">
                 <div className="flex-shrink-0">
                   <Image
-                    src={data.image || "/images/product/product.png"}
+                    src={data.image?.url || "/images/product/product.png"}
                     alt="Brand"
                     width={48}
                     height={48}
@@ -195,7 +197,10 @@ const TableOneDataBarang = ({
                     />
                   </svg>
                 </button>
-                <button className="hover:text-primary">
+                <button
+                  className="hover:text-primary"
+                  onClick={() => handleUpdateProduct(data.id)}
+                >
                   <svg
                     className="fill-current"
                     width="20"

@@ -15,13 +15,12 @@ export const updateProfile = async (data: any) => {
   formData.append("phoneNumber", data.phoneNumber);
   formData.append("bio", data.bio);
   formData.append("password", data.password);
-  // data.avatar && formData.append("file", data.avatar);
+  data.avatar && formData.append("file", data.avatar);
 
   const response = fetch(`${BASE_URL}${PREFIX}/profile`, {
     method: "POST",
     headers: {
       ...HEADER_AUTH,
-      "Content-Type": "multipart/form-data",
     },
     body: formData,
   });

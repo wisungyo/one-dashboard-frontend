@@ -47,9 +47,14 @@ const brandData: BRAND[] = [
 export type TypeChartOne = {
   title: string;
   data: any[];
+  onShowDetail: (id: string) => void;
 };
 
-const TableOneLaporan = ({ title, data = [] }: TypeChartOne) => {
+const TableOneLaporan = ({
+  title,
+  data = [],
+  onShowDetail = () => {},
+}: TypeChartOne) => {
   return (
     <div className="rounded-sm border border-stroke bg-white pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark xl:pb-1">
       <h4 className="mb-6 px-5 text-xl font-semibold text-black dark:text-white sm:px-7.5">
@@ -113,7 +118,10 @@ const TableOneLaporan = ({ title, data = [] }: TypeChartOne) => {
               </div>
 
               <div className="flex items-center justify-center p-2.5 xl:p-5">
-                <button className="hover:text-primary">
+                <button
+                  className="hover:text-primary"
+                  onClick={() => onShowDetail(data.id)}
+                >
                   <svg
                     className="fill-current"
                     width="18"

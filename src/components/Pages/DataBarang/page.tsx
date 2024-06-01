@@ -39,6 +39,7 @@ const DataBarang: React.FC = () => {
     handlePrevPage,
     handleToggleModal,
     handleDeleteProduct,
+    handleUpdateProduct,
   } = useDatangBarangHook();
 
   if (loading) {
@@ -58,6 +59,7 @@ const DataBarang: React.FC = () => {
             onSearch={handleSearch}
             onChangeSearch={setName}
             handleToggleModal={handleToggleModal}
+            handleUpdateProduct={handleUpdateProduct}
           />
           <div className="mt-4 flex flex-row items-center justify-between">
             <p>

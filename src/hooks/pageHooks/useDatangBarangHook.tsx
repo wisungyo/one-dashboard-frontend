@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
 import { deleteProduct, getProduct } from "@/api/product";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 
 export const useDatangBarangHook = () => {
+  const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [loading, setLoading] = useState(true);
   const [category_id, setCategory_id] = useState("");
@@ -68,6 +70,10 @@ export const useDatangBarangHook = () => {
     }
   };
 
+  const handleUpdateProduct = async (id: string) => {
+    router.push("/data-barang/" + id);
+  };
+
   const handleNextPage = () => {
     if (page === totalPage) return;
     setPage((prev) => prev + 1);
@@ -115,5 +121,6 @@ export const useDatangBarangHook = () => {
     handlePrevPage,
     handleToggleModal,
     handleDeleteProduct,
+    handleUpdateProduct,
   };
 };

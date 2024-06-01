@@ -30,3 +30,27 @@ export const getTransactions = async (data: any) => {
   });
   return response;
 };
+
+export const getTransactionDetail = async (id: string) => {
+  const url = `${BASE_URL}${PREFIX}/transactions/${id}`;
+
+  const response = fetch(url, {
+    method: "GET",
+    headers: HEADER_AUTH,
+  });
+  return response;
+};
+
+export const createTransaction = async (data: any) => {
+  const url = `${BASE_URL}${PREFIX}/transactions`;
+
+  const response = fetch(url, {
+    method: "POST",
+    headers: {
+      ...HEADER_AUTH,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  });
+  return response;
+};

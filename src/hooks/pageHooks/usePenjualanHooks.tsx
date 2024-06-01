@@ -1,64 +1,119 @@
-import { getTransactions } from "@/api/transaction";
+import { createTransaction } from "@/api/transaction";
 import { useEffect, useState } from "react";
 
 export const usePenjualanHooks = () => {
-  const [loading, setLoading] = useState(false);
-  const [category_id, setCategory_id] = useState("");
-  const [code, setCode] = useState("");
-  const [sort, setSort] = useState("");
-  const [sort_by, setSort_by] = useState("");
-  const [limit, setLimit] = useState("");
-  const [page, setPage] = useState("");
-  const [transaction, setTransaction] = useState([]);
-  const [type, setType] = useState("");
-  const [total_item, setTotal_item] = useState("");
-  const [total_quantity, setTotal_quantity] = useState("");
-  const [total_price, setTotal_price] = useState("");
-  const [customer_name, setCustomer_name] = useState("");
-  const [customer_phone, setCustomer_phone] = useState("");
-  const [customer_address, setCustomer_address] = useState("");
-  const [note, setNote] = useState("");
-  const [start_date, setStart_date] = useState("");
-  const [end_date, setEnd_date] = useState("");
-  const [product_id, setProduct_id] = useState("");
+  const [loading, setLoading] = useState<boolean>(false);
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [note, setNote] = useState<string>("");
+  const [products, setProducts] = useState<any[]>([]);
+  const [totalBuy, setTotalBuy] = useState<number>(0);
+  const [totalProduct, setTotalProduct] = useState<number>(0);
+  const [totalProductKind, setTotalProductKind] = useState<number>(0);
 
   useEffect(() => {
-    handleGetTransaction();
-  }, []);
+    let totalBuy = 0;
+    let totalProduct = 0;
+    let totalProductKind = 0;
+    products.forEach((product) => {
+      if (product.quantity > 0) {
+        totalBuy += product.totalBuy * product.price;
+        totalProduct += product.totalBuy;
+        totalProductKind += 1;
+      }
+    });
+    setTotalBuy(totalBuy);
+    setTotalProduct(totalProduct);
+    setTotalProductKind(totalProductKind);
+  }, [products]);
 
-  const handleGetTransaction = async () => {
-    setLoading(true);
+  const handleInputProduct = (data: any) => {
+    const isProductExists = products.some((product) => product.id === data.id);
 
-    const params = {
-      category_id: category_id,
-      product_id: product_id,
-      code: code,
-      type: type,
-      total_item: total_item,
-      total_quantity: total_quantity,
-      total_price: total_price,
-      customer_name: customer_name,
-      customer_phone: customer_phone,
-      customer_address: customer_address,
-      note: note,
-      start_date: start_date,
-      end_date: end_date,
-      sort: sort,
-      sort_by: sort_by,
-      limit: limit,
-      page: page,
-    };
-
-    const response = await getTransactions(params);
-    const data = await response.json();
-
-    if (response.status === 200) {
-      setTransaction(data.data);
-      setLoading(false);
-    } else {
-      console.error(data);
+    if (!isProductExists) {
+      const newProduct = { ...data, totalBuy: 1 };
+      const newProducts = [...products, newProduct];
+      setProducts(newProducts);
     }
   };
 
-  return {};
+  const handleRemoveProduct = (index: number) => {
+    const newProducts = products.filter((_, i) => i !== index);
+    setProducts(newProducts);
+  };
+
+  const handleDecreaseProduct = (id: string) => {
+    const newProducts = products.map((product, i) => {
+      if (product.id === id) {
+        if (product.totalBuy > 1) {
+          product.totalBuy -= 1;
+        }
+      }
+      return product;
+    });
+    setProducts(newProducts);
+  };
+
+  const handleIncreaseProduct = (id: string) => {
+    const newProducts = products.map((product, i) => {
+      if (product.id === id) {
+        if (product.totalBuy < product.quantity) {
+          product.totalBuy += 1;
+        }
+      }
+      return product;
+    });
+    setProducts(newProducts);
+  };
+
+  const handleSubmitTransaction = async () => {
+    setLoading(true);
+    const user = JSON.parse(localStorage.getItem("user") || "{}");
+    const transactionData = {
+      customer_name: user.name || "",
+      customer_phone: user?.phone_number || "",
+      customer_address: user?.email || "",
+      note: note,
+      items: products
+        .filter((product) => product.quantity > 0)
+        .map((product) => ({
+          product_id: product.id,
+          quantity: product.totalBuy,
+          note: note,
+        })),
+    };
+
+    const response = await createTransaction(transactionData);
+    console.log(response);
+
+    if (response.status === 201) {
+      setIsModalOpen(true);
+      setNote("");
+      setProducts([]);
+      setTotalBuy(0);
+      setTotalProduct(0);
+      setTotalProductKind(0);
+      setLoading(false);
+    } else {
+      setLoading(false);
+      console.error("Failed to create transaction");
+    }
+  };
+
+  return {
+    note,
+    loading,
+    products,
+    totalBuy,
+    isModalOpen,
+    totalProduct,
+    totalProductKind,
+    setNote,
+    setProducts,
+    setIsModalOpen,
+    handleInputProduct,
+    handleRemoveProduct,
+    handleIncreaseProduct,
+    handleDecreaseProduct,
+    handleSubmitTransaction,
+  };
 };

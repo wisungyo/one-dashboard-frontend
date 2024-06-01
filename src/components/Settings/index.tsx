@@ -159,11 +159,11 @@ const ContentSettings = () => {
               </label>
               <input
                 className="w-full rounded border border-stroke bg-gray px-4.5 py-3 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
-                type="password"
+                // type="password"
                 name="Username"
                 id="Username"
                 placeholder="Masukkan password kamu"
-                // defaultValue="devidjhon24"
+                // defaultValue=""
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
               />

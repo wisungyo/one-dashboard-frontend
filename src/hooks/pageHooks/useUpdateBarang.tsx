@@ -1,13 +1,19 @@
-import { createProduct, getProductById } from "@/api/product";
-import { useEffect, useState } from "react";
 import { getCategories } from "@/api/category";
+import {
+  createProduct,
+  getProduct,
+  getProductById,
+  updateProduct,
+} from "@/api/product";
+import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 
-export const useTambahBarangHooks = () => {
+export const useUpdateBarangHooks = () => {
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
-  const [category, setCategory] = useState<number | null>(null);
+  const [category, setCategory] = useState<string>("");
+  const [categoryLabel, setCategoryLabel] = useState("");
   const [code, setCode] = useState("");
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
@@ -41,12 +47,15 @@ export const useTambahBarangHooks = () => {
 
     if (response.status === 200) {
       const data = await response.json();
-      setName(data.name);
-      setCode(data.code);
-      setPrice(data.price);
-      setQuantity(data.quantity);
-      setDescription(data.description);
-      setCategory(data.category_id);
+      console.log(data);
+      setName(data.data.name);
+      setCode(data.data.code);
+      setPrice(data.data.price);
+      setQuantity(data.data.quantity);
+      setDescription(data.data.description);
+      setCategory(data.data.category.id);
+      setCategoryLabel(data.data.category.name);
+      console.log(data.data.category.name);
       setLoading(false);
     } else {
       setLoading(false);
@@ -54,7 +63,7 @@ export const useTambahBarangHooks = () => {
     }
   };
 
-  const handleCreateProduct = async () => {
+  const handleUpdateProduct = async (id: string) => {
     setLoading(true);
     const newProduct = {
       name,
@@ -66,7 +75,7 @@ export const useTambahBarangHooks = () => {
       category_id: category,
     };
 
-    const response = await createProduct(newProduct);
+    const response = await updateProduct(id, newProduct);
 
     if (response.status === 200) {
       setLoading(false);
@@ -78,6 +87,7 @@ export const useTambahBarangHooks = () => {
   };
 
   return {
+    id,
     name,
     code,
     image,
@@ -87,6 +97,7 @@ export const useTambahBarangHooks = () => {
     quantity,
     categories,
     description,
+    categoryLabel,
     setName,
     setImage,
     setCode,
@@ -94,6 +105,6 @@ export const useTambahBarangHooks = () => {
     setQuantity,
     setCategory,
     setDescription,
-    handleCreateProduct,
+    handleUpdateProduct,
   };
 };

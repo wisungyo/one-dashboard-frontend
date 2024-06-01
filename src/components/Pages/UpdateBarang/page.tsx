@@ -1,11 +1,12 @@
 "use client";
-import { useTambahBarangHooks } from "@/hooks/pageHooks/useTambahBarangHooks";
+import { useUpdateBarangHooks } from "@/hooks/pageHooks/useUpdateBarang";
 import SelectGroupOne from "@/components/SelectGroup/SelectGroupOne";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Loader2 from "@/components/common/Loader2";
 
-const TambahBarang = () => {
+const UpdateBarang = () => {
   const {
+    id,
     name,
     code,
     image,
@@ -15,6 +16,7 @@ const TambahBarang = () => {
     quantity,
     categories,
     description,
+    categoryLabel,
     setName,
     setImage,
     setCode,
@@ -22,8 +24,8 @@ const TambahBarang = () => {
     setQuantity,
     setCategory,
     setDescription,
-    handleCreateProduct,
-  } = useTambahBarangHooks();
+    handleUpdateProduct,
+  } = useUpdateBarangHooks();
 
   if (loading) {
     return <Loader2 />;
@@ -31,7 +33,7 @@ const TambahBarang = () => {
 
   return (
     <>
-      <Breadcrumb pageName="Tambah Barang" />
+      <Breadcrumb pageName="Update Barang" />
 
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
@@ -50,6 +52,7 @@ const TambahBarang = () => {
                 <input
                   type="text"
                   placeholder="Masukkan Nama Barang"
+                  value={name}
                   onChange={(e) => setName(e.target.value)}
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
@@ -59,6 +62,7 @@ const TambahBarang = () => {
                 title="Kategori"
                 onChange={setCategory}
                 data={categories}
+                defaultValue={category || "0"}
               />
 
               <div>
@@ -68,6 +72,7 @@ const TambahBarang = () => {
                 <input
                   type="text"
                   placeholder="Masukkan Kode Barang"
+                  value={code}
                   onChange={(e) => setCode(e.target.value)}
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 />
@@ -81,6 +86,7 @@ const TambahBarang = () => {
                   <input
                     type="text"
                     placeholder="Masukkan Harga Barang"
+                    value={price}
                     onChange={(e) => setPrice(Number(e.target.value))}
                     className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
@@ -92,6 +98,7 @@ const TambahBarang = () => {
                   <input
                     type="text"
                     placeholder="Masukkan Kuantitas Barang"
+                    value={quantity}
                     onChange={(e) => setQuantity(Number(e.target.value))}
                     className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                   />
@@ -105,6 +112,7 @@ const TambahBarang = () => {
                 <textarea
                   rows={6}
                   placeholder="Masukkan Deskripsi Barang"
+                  value={description}
                   onChange={(e) => setDescription(e.target.value)}
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                 ></textarea>
@@ -112,7 +120,7 @@ const TambahBarang = () => {
 
               <button
                 className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
-                onClick={handleCreateProduct}
+                onClick={() => handleUpdateProduct(id)}
               >
                 Simpan
               </button>
@@ -151,4 +159,4 @@ const TambahBarang = () => {
   );
 };
 
-export default TambahBarang;
+export default UpdateBarang;

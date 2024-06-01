@@ -44,6 +44,7 @@ export const useSettingHooks = () => {
       password: password,
       avatar: avatarBinary,
     };
+    console.log(params);
 
     const response = await updateProfile(params);
     const data = await response.json();

@@ -53,21 +53,20 @@ export const createProduct = async (data: any) => {
 };
 
 export const updateProduct = async (id: string, data: any) => {
-  const prepData = {
-    category_id: data.category_id,
-    code: data.code,
-    name: data.name,
-    description: data.description,
-    price: data.price,
-    quantity: data.quantity,
-    image: data.image,
-  };
+  const formData = new FormData();
+  formData.append("name", data.name);
+  formData.append("code", data.code);
+  formData.append("price", data.price);
+  formData.append("image", data.image);
+  formData.append("quantity", data.quantity);
+  formData.append("description", data.description);
+  formData.append("category_id", data.category_id);
 
   const url = `${BASE_URL}${PREFIX}/products/${id}`;
   const response = fetch(url, {
-    method: "PUT",
+    method: "POST",
     headers: HEADER_AUTH,
-    body: JSON.stringify(prepData),
+    body: formData,
   });
   return response;
 };

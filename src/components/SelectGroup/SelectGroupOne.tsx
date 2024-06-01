@@ -1,16 +1,18 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 type TypeSelectGroupOne = {
   title: string;
   data: any[];
   onChange?: (value: any) => void;
+  defaultValue?: string;
 };
 
 const SelectGroupOne = ({
   title = "",
   data = [],
   onChange = () => {},
+  defaultValue = "",
 }: TypeSelectGroupOne) => {
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
@@ -26,13 +28,19 @@ const SelectGroupOne = ({
     changeTextColor();
   };
 
+  useEffect(() => {
+    setSelectedOption(defaultValue);
+    changeTextColor();
+    console.log(defaultValue);
+  }, [defaultValue]);
+
   return (
     <div className="mb-4.5">
       <label className="mb-2.5 block text-black dark:text-white">{title}</label>
 
       <div className="relative z-20 bg-transparent dark:bg-form-input">
         <select
-          value={selectedOption}
+          value={selectedOption || defaultValue}
           onChange={handleSelectChange}
           className={`relative z-20 w-full appearance-none rounded border border-stroke bg-transparent px-5 py-3 outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary ${
             isOptionSelected ? "text-black dark:text-white" : ""

@@ -1,7 +1,9 @@
-import { getTransactions } from "@/api/transaction";
+import { getTransactionDetail, getTransactions } from "@/api/transaction";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 
 export const useLaporanHooks = () => {
+  const router = useRouter();
   const [loading, setLoading] = useState(true);
   const [category_id, setCategory_id] = useState("");
   const [code, setCode] = useState("");
@@ -63,6 +65,10 @@ export const useLaporanHooks = () => {
     }
   };
 
+  const handleGetDetailTransaction = async (id: string) => {
+    router.push(`/laporan/${id}`);
+  };
+
   const handleNextPage = () => {
     if (page === totalPage) return;
     setPage((prev) => prev + 1);
@@ -97,5 +103,6 @@ export const useLaporanHooks = () => {
     customer_address,
     handleNextPage,
     handlePrevPage,
+    handleGetDetailTransaction,
   };
 };
