@@ -92,7 +92,7 @@ const TableOneLaporanDetail = ({ data = [] }: TypeChartOne) => {
                   />
                 </div>
                 <p className="hidden text-black dark:text-white sm:block">
-                  {data.name}
+                  {data.product?.name}
                 </p>
               </div>
 
