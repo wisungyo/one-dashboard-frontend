@@ -3,6 +3,7 @@ import { useTambahBarangHooks } from "@/hooks/pageHooks/useTambahBarangHooks";
 import SelectGroupOne from "@/components/SelectGroup/SelectGroupOne";
 import Breadcrumb from "@/components/Breadcrumbs/Breadcrumb";
 import Loader2 from "@/components/common/Loader2";
+import ConfirmationModal from "@/components/Modal/ConfirmationModal";
 
 const TambahBarang = () => {
   const {
@@ -15,13 +16,18 @@ const TambahBarang = () => {
     quantity,
     categories,
     description,
+    isModalOpen,
+    modalMessage,
     setName,
     setImage,
     setCode,
     setPrice,
+    showModal,
+    hideModal,
     setQuantity,
     setCategory,
     setDescription,
+    setModalMessage,
     handleCreateProduct,
   } = useTambahBarangHooks();
 
@@ -49,6 +55,7 @@ const TambahBarang = () => {
                 </label>
                 <input
                   type="text"
+                  value={name}
                   placeholder="Masukkan Nama Barang"
                   onChange={(e) => setName(e.target.value)}
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -59,6 +66,7 @@ const TambahBarang = () => {
                 title="Kategori"
                 onChange={setCategory}
                 data={categories}
+                defaultValue={category || "-1"}
               />
 
               <div>
@@ -67,6 +75,7 @@ const TambahBarang = () => {
                 </label>
                 <input
                   type="text"
+                  value={code}
                   placeholder="Masukkan Kode Barang"
                   onChange={(e) => setCode(e.target.value)}
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -79,7 +88,8 @@ const TambahBarang = () => {
                     Harga
                   </label>
                   <input
-                    type="text"
+                    type="number"
+                    value={price}
                     placeholder="Masukkan Harga Barang"
                     onChange={(e) => setPrice(Number(e.target.value))}
                     className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -90,10 +100,16 @@ const TambahBarang = () => {
                     Kuantitas
                   </label>
                   <input
-                    type="text"
+                    type="number"
+                    value={quantity}
                     placeholder="Masukkan Kuantitas Barang"
                     onChange={(e) => setQuantity(Number(e.target.value))}
                     className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                    style={{
+                      appearance: "textfield", // For Edge
+                      MozAppearance: "textfield", // For Firefox
+                      WebkitAppearance: "none", // For Chrome, Safari, etc.
+                    }}
                   />
                 </div>
               </div>
@@ -104,6 +120,7 @@ const TambahBarang = () => {
                 </label>
                 <textarea
                   rows={6}
+                  value={description}
                   placeholder="Masukkan Deskripsi Barang"
                   onChange={(e) => setDescription(e.target.value)}
                   className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
@@ -146,6 +163,10 @@ const TambahBarang = () => {
             </div>
           </div>
         </div>
+
+        {isModalOpen && (
+          <ConfirmationModal message={modalMessage} onConfirm={hideModal} />
+        )}
       </div>
     </>
   );

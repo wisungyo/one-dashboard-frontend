@@ -7,13 +7,15 @@ export const useTambahBarangHooks = () => {
   const { id } = useParams<{ id: string }>();
   const [loading, setLoading] = useState(true);
   const [name, setName] = useState("");
-  const [category, setCategory] = useState<number | null>(null);
+  const [category, setCategory] = useState<string>("-1");
   const [code, setCode] = useState("");
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [categories, setCategories] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   useEffect(() => {
     handleGetCategory();
@@ -55,7 +57,7 @@ export const useTambahBarangHooks = () => {
   };
 
   const handleCreateProduct = async () => {
-    setLoading(true);
+    // setLoading(true);
     const newProduct = {
       name,
       code,
@@ -66,15 +68,54 @@ export const useTambahBarangHooks = () => {
       category_id: category,
     };
 
+    if (
+      !name ||
+      !code ||
+      !price ||
+      !quantity ||
+      !description ||
+      !category ||
+      !image
+    ) {
+      setModalMessage("Pastikan semua data terisi!");
+      showModal();
+      return;
+    }
+
     const response = await createProduct(newProduct);
 
-    if (response.status === 200) {
+    if (response.status === 201) {
       setLoading(false);
+      clearForm();
+      setModalMessage("Product added successfully");
+      showModal();
       console.log("Product added successfully");
     } else {
       setLoading(false);
+      setModalMessage(
+        "Ada kesalahan saat menambahkan barang. Pastikan data terisi dengan benar dan coba lagi.",
+      );
+      showModal();
       console.error("Failed to add product");
     }
+  };
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const hideModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const clearForm = () => {
+    setName("");
+    setCode("");
+    setPrice(0);
+    setQuantity(0);
+    setDescription("");
+    setCategory("");
+    setImage("");
   };
 
   return {
@@ -87,13 +128,18 @@ export const useTambahBarangHooks = () => {
     quantity,
     categories,
     description,
+    isModalOpen,
+    modalMessage,
     setName,
     setImage,
     setCode,
     setPrice,
+    showModal,
+    hideModal,
     setQuantity,
     setCategory,
     setDescription,
+    setModalMessage,
     handleCreateProduct,
   };
 };

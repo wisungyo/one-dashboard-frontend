@@ -62,7 +62,7 @@ const UpdateBarang = () => {
                 title="Kategori"
                 onChange={setCategory}
                 data={categories}
-                defaultValue={category || "0"}
+                defaultValue={category || ""}
               />
 
               <div>

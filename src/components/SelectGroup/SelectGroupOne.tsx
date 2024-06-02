@@ -12,7 +12,7 @@ const SelectGroupOne = ({
   title = "",
   data = [],
   onChange = () => {},
-  defaultValue = "",
+  defaultValue = "-1",
 }: TypeSelectGroupOne) => {
   const [selectedOption, setSelectedOption] = useState<string>("");
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
@@ -46,7 +46,7 @@ const SelectGroupOne = ({
             isOptionSelected ? "text-black dark:text-white" : ""
           }`}
         >
-          <option value="" disabled className="text-body dark:text-bodydark">
+          <option value="-1" disabled className="text-body dark:text-bodydark">
             Select your subject
           </option>
           {data.map((item, index) => (
