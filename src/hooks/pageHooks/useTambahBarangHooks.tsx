@@ -33,7 +33,6 @@ export const useTambahBarangHooks = () => {
       setLoading(false);
     } else {
       setLoading(false);
-      console.error("Failed to fetch prediction");
     }
   };
 
@@ -52,12 +51,11 @@ export const useTambahBarangHooks = () => {
       setLoading(false);
     } else {
       setLoading(false);
-      console.error("Failed to fetch product");
     }
   };
 
   const handleCreateProduct = async () => {
-    // setLoading(true);
+    setLoading(true);
     const newProduct = {
       name,
       code,
@@ -77,6 +75,7 @@ export const useTambahBarangHooks = () => {
       !category ||
       !image
     ) {
+      setLoading(false);
       setModalMessage("Pastikan semua data terisi!");
       showModal();
       return;
@@ -87,16 +86,14 @@ export const useTambahBarangHooks = () => {
     if (response.status === 201) {
       setLoading(false);
       clearForm();
-      setModalMessage("Product added successfully");
+      setModalMessage("Barang berhasil ditambahkan!");
       showModal();
-      console.log("Product added successfully");
     } else {
       setLoading(false);
       setModalMessage(
         "Ada kesalahan saat menambahkan barang. Pastikan data terisi dengan benar dan coba lagi.",
       );
       showModal();
-      console.error("Failed to add product");
     }
   };
 
@@ -116,6 +113,20 @@ export const useTambahBarangHooks = () => {
     setDescription("");
     setCategory("");
     setImage("");
+  };
+
+  const handleSetPrice = (value: string) => {
+    if (isNaN(Number(value))) {
+      return;
+    }
+    setPrice(Number(value));
+  };
+
+  const handleSetQuantity = (value: string) => {
+    if (isNaN(Number(value))) {
+      return;
+    }
+    setQuantity(Number(value));
   };
 
   return {
@@ -139,7 +150,9 @@ export const useTambahBarangHooks = () => {
     setQuantity,
     setCategory,
     setDescription,
+    handleSetPrice,
     setModalMessage,
+    handleSetQuantity,
     handleCreateProduct,
   };
 };

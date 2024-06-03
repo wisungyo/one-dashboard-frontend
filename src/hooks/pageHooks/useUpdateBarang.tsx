@@ -20,6 +20,8 @@ export const useUpdateBarangHooks = () => {
   const [description, setDescription] = useState("");
   const [image, setImage] = useState("");
   const [categories, setCategories] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
 
   useEffect(() => {
     handleGetCategory();
@@ -37,7 +39,6 @@ export const useUpdateBarangHooks = () => {
       setLoading(false);
     } else {
       setLoading(false);
-      console.error("Failed to fetch prediction");
     }
   };
 
@@ -47,7 +48,6 @@ export const useUpdateBarangHooks = () => {
 
     if (response.status === 200) {
       const data = await response.json();
-      console.log(data);
       setName(data.data.name);
       setCode(data.data.code);
       setPrice(data.data.price);
@@ -75,15 +75,55 @@ export const useUpdateBarangHooks = () => {
       category_id: category,
     };
 
+    if (
+      !name ||
+      !code ||
+      !price ||
+      !quantity ||
+      !description ||
+      !category ||
+      !image
+    ) {
+      setModalMessage("Pastikan semua data terisi!");
+      showModal();
+      return;
+    }
+
     const response = await updateProduct(id, newProduct);
 
     if (response.status === 200) {
       setLoading(false);
-      console.log("Product added successfully");
+      setModalMessage("Barang berhasil diubah!");
+      showModal();
     } else {
       setLoading(false);
-      console.error("Failed to add product");
+      setModalMessage(
+        "Ada kesalahan saat menambahkan barang. Pastikan data terisi dengan benar dan coba lagi.",
+      );
+      showModal();
     }
+  };
+
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const hideModal = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleSetPrice = (value: string) => {
+    if (isNaN(Number(value))) {
+      return;
+    }
+    setPrice(Number(value));
+  };
+
+  const handleSetQuantity = (value: string) => {
+    if (isNaN(Number(value))) {
+      return;
+    }
+    setQuantity(Number(value));
   };
 
   return {
@@ -97,14 +137,21 @@ export const useUpdateBarangHooks = () => {
     quantity,
     categories,
     description,
+    isModalOpen,
+    modalMessage,
     categoryLabel,
     setName,
-    setImage,
     setCode,
+    setImage,
     setPrice,
+    showModal,
+    hideModal,
     setQuantity,
     setCategory,
     setDescription,
+    handleSetPrice,
+    setModalMessage,
+    handleSetQuantity,
     handleUpdateProduct,
   };
 };
