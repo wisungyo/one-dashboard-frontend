@@ -98,7 +98,7 @@ const TableOneLaporanDetail = ({ data = [] }: TypeChartOne) => {
 
               <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
                 <p className="text-center text-black dark:text-white">
-                  {data.product.category.name}
+                  {data.product?.category?.name}
                 </p>
               </div>
 
@@ -120,7 +120,7 @@ const TableOneLaporanDetail = ({ data = [] }: TypeChartOne) => {
               <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
                 <p className="text-black dark:text-white">
                   Rp{" "}
-                  {Math.floor(data.quantity * data.product.price)
+                  {Math.floor(data.quantity * data.product?.price)
                     .toLocaleString()
                     .replace(/,/g, ".")}
                 </p>
