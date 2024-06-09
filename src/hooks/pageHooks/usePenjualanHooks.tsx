@@ -7,6 +7,7 @@ export const usePenjualanHooks = () => {
   const [note, setNote] = useState<string>("");
   const [products, setProducts] = useState<any[]>([]);
   const [totalBuy, setTotalBuy] = useState<number>(0);
+  const [modalMessage, setModalMessage] = useState<string>("");
   const [totalProduct, setTotalProduct] = useState<number>(0);
   const [totalProductKind, setTotalProductKind] = useState<number>(0);
 
@@ -66,6 +67,18 @@ export const usePenjualanHooks = () => {
   };
 
   const handleSubmitTransaction = async () => {
+    if (products.length === 0) {
+      setModalMessage("Mohon masukkan produk terlebih dahulu");
+      setIsModalOpen(true);
+      return;
+    }
+
+    if (totalProduct === 0) {
+      setModalMessage("Kuantitas produk tidak boleh kosong");
+      setIsModalOpen(true);
+      return;
+    }
+
     setLoading(true);
     const user = JSON.parse(localStorage.getItem("user") || "{}");
     const transactionData = {
@@ -86,6 +99,7 @@ export const usePenjualanHooks = () => {
     console.log(response);
 
     if (response.status === 201) {
+      setModalMessage("Transaksi berhasil dibuat");
       setIsModalOpen(true);
       setNote("");
       setProducts([]);
@@ -94,6 +108,8 @@ export const usePenjualanHooks = () => {
       setTotalProductKind(0);
       setLoading(false);
     } else {
+      setModalMessage("Transaksi gagal dibuat");
+      setIsModalOpen(true);
       setLoading(false);
       console.error("Failed to create transaction");
     }
@@ -105,6 +121,7 @@ export const usePenjualanHooks = () => {
     products,
     totalBuy,
     isModalOpen,
+    modalMessage,
     totalProduct,
     totalProductKind,
     setNote,

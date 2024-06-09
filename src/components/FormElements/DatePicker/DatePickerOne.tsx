@@ -1,5 +1,6 @@
 import flatpickr from "flatpickr";
 import { useEffect, useRef } from "react";
+import { Indonesian } from "flatpickr/dist/l10n/id.js";
 
 type TypeDatePickerOne = {
   label?: string;
@@ -19,6 +20,7 @@ const DatePickerOne = ({
   useEffect(() => {
     if (inputRef.current) {
       flatpickr(inputRef.current, {
+        locale: Indonesian,
         mode: "single",
         static: true,
         monthSelectorType: "static",

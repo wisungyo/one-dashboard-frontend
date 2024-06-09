@@ -18,7 +18,7 @@ export const useUpdateBarangHooks = () => {
   const [price, setPrice] = useState(0);
   const [quantity, setQuantity] = useState(0);
   const [description, setDescription] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState<any>("");
   const [categories, setCategories] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
@@ -55,7 +55,6 @@ export const useUpdateBarangHooks = () => {
       setDescription(data.data.description);
       setCategory(data.data.category.id);
       setCategoryLabel(data.data.category.name);
-      console.log(data.data.category.name);
       setLoading(false);
     } else {
       setLoading(false);
@@ -75,32 +74,39 @@ export const useUpdateBarangHooks = () => {
       category_id: category,
     };
 
-    if (
-      !name ||
-      !code ||
-      !price ||
-      !quantity ||
-      !description ||
-      !category ||
-      !image
-    ) {
+    if (!quantity) {
+      setModalMessage("Kuantitas tidak boleh kosong!");
+      showModal();
+      setLoading(false);
+      return;
+    }
+
+    if (!name || !code || !price || !description || !category || !image) {
       setModalMessage("Pastikan semua data terisi!");
       showModal();
+      setLoading(false);
       return;
     }
 
     const response = await updateProduct(id, newProduct);
+    const data = await response.json();
 
     if (response.status === 200) {
       setLoading(false);
       setModalMessage("Barang berhasil diubah!");
       showModal();
     } else {
-      setLoading(false);
-      setModalMessage(
-        "Ada kesalahan saat menambahkan barang. Pastikan data terisi dengan benar dan coba lagi.",
-      );
+      if (data.message === "The code has already been taken.") {
+        setModalMessage(
+          "Kode barang sudah terpakai. Pastikan kode barang unik dan coba lagi.",
+        );
+      } else {
+        setModalMessage(
+          "Ada kesalahan saat menambahkan barang. Pastikan data terisi dengan benar dan coba lagi.",
+        );
+      }
       showModal();
+      setLoading(false);
     }
   };
 

@@ -48,7 +48,7 @@ const Laporan: React.FC = () => {
         <div className="col-span-12">
           <TableOneLaporan
             data={transaction}
-            title="Transaksi Penjualan"
+            title="Laporan Penjualan"
             onShowDetail={handleGetDetailTransaction}
           />
           <div className="mt-4 flex flex-row items-center justify-between">

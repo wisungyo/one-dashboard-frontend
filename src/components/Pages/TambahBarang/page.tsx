@@ -33,10 +33,6 @@ const TambahBarang = () => {
     handleCreateProduct,
   } = useTambahBarangHooks();
 
-  // if (loading) {
-  //   return <Loader2 />;
-  // }
-
   return (
     <>
       {loading ? (
@@ -163,13 +159,22 @@ const TambahBarang = () => {
                     </label>
                     <input
                       type="file"
-                      className="w-full rounded-md border border-stroke p-3 outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-[#EEEEEE] file:px-2.5 file:py-1 file:text-sm focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-strokedark dark:file:bg-white/30 dark:file:text-white"
+                      className="absolute w-full rounded-md border border-stroke p-3 opacity-0 outline-none transition file:mr-4 file:rounded file:border-[0.5px] file:border-stroke file:bg-[#EEEEEE] file:px-2.5 file:py-1 file:text-sm focus:border-primary file:focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:file:border-strokedark dark:file:bg-white/30 dark:file:text-white"
                       accept="image/*"
                       onChange={(e: any) => {
                         const file = e.target.files[0];
                         setImage(file);
                       }}
                     />
+                    <div className="flex items-center">
+                      <button
+                        type="button"
+                        className="rounded-md border border-stroke p-3 transition focus:border-primary"
+                      >
+                        Pilih File
+                      </button>
+                      <span className="ml-4 file:text-sm">{image?.name}</span>
+                    </div>
                   </div>
                 </div>
               </div>

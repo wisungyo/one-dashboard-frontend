@@ -12,7 +12,7 @@ export const useLaporanHooks = () => {
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
   const [transaction, setTransaction] = useState([]);
-  const [type, setType] = useState("");
+  const [type, setType] = useState("OUT");
   const [total_item, setTotal_item] = useState("");
   const [total_quantity, setTotal_quantity] = useState("");
   const [total_price, setTotal_price] = useState("");

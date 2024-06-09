@@ -8,7 +8,7 @@ const ContentSettings = () => {
     bio,
     name,
     email,
-    avatar,
+    avatarUrl,
     loading,
     password,
     phoneNumber,
@@ -18,7 +18,7 @@ const ContentSettings = () => {
     setAvatar,
     setPassword,
     setPhoneNumber,
-    setAvatarBinary,
+    setAvatarUrl,
     handleGetProfile,
     handleUpdateProfile,
   } = useSettingHooks();
@@ -77,7 +77,6 @@ const ContentSettings = () => {
                     name="fullName"
                     id="fullName"
                     placeholder="Masukkan nama kamu"
-                    // defaultValue="Devid Jhon"
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                   />
@@ -89,7 +88,7 @@ const ContentSettings = () => {
                   className="mb-3 block text-sm font-medium text-black dark:text-white"
                   htmlFor="phoneNumber"
                 >
-                  Nomor Telpon
+                  Nomor Telepon
                 </label>
                 <input
                   className="w-full rounded border border-stroke bg-gray px-4.5 py-3 text-black focus:border-primary focus-visible:outline-none dark:border-strokedark dark:bg-meta-4 dark:text-white dark:focus:border-primary"
@@ -97,7 +96,6 @@ const ContentSettings = () => {
                   name="phoneNumber"
                   id="phoneNumber"
                   placeholder="Masukkan nomor telepon kamu"
-                  // defaultValue="+990 3343 7865"
                   value={phoneNumber}
                   onChange={(e) => setPhoneNumber(e.target.value)}
                 />
@@ -214,22 +212,21 @@ const ContentSettings = () => {
                   id="bio"
                   rows={6}
                   placeholder="Masukkan bio kamu"
-                  // defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque posuere fermentum urna, eu condimentum mauris tempus ut. Donec fermentum blandit aliquet."
                   value={bio}
                   onChange={(e) => setBio(e.target.value)}
                 ></textarea>
               </div>
             </div>
 
-            <div className="flex justify-end gap-4.5">
+            {/* <div className="flex justify-end gap-4.5">
               <button
                 className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
                 type="submit"
                 onClick={handleUpdateProfile}
               >
-                Save
+                Simpan
               </button>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>
@@ -237,14 +234,14 @@ const ContentSettings = () => {
         <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
           <div className="border-b border-stroke px-7 py-4 dark:border-strokedark">
             <h3 className="font-medium text-black dark:text-white">
-              Your Photo
+              Foto Profil
             </h3>
           </div>
           <div className="p-7">
             <div className="mb-4 flex items-center gap-3">
               <div className="h-14 w-14 rounded-full">
                 <Image
-                  src={avatar || "/images/user/user.png"}
+                  src={avatarUrl || "/images/user/user.png"}
                   width={55}
                   height={55}
                   alt="User"
@@ -252,14 +249,14 @@ const ContentSettings = () => {
               </div>
               <div>
                 <span className="mb-1.5 text-black dark:text-white">
-                  Edit your photo
+                  Ubah foto profil
                 </span>
                 <span className="flex gap-2.5">
                   <button
                     className="text-sm hover:text-primary"
                     onClick={() => setAvatar("")}
                   >
-                    Delete
+                    Hapus
                   </button>
                   {/* <button className="text-sm hover:text-primary">Update</button> */}
                 </span>
@@ -276,15 +273,20 @@ const ContentSettings = () => {
                 className="absolute inset-0 z-50 m-0 h-full w-full cursor-pointer p-0 opacity-0 outline-none"
                 onChange={(e: any) => {
                   const file = e.target.files[0];
-                  const reader = new FileReader();
-                  reader.onloadend = () => {
-                    const blob = new Blob([reader.result as ArrayBuffer], {
-                      type: file.type,
-                    });
-                    setAvatarBinary(blob);
-                  };
-                  reader.readAsArrayBuffer(file);
+                  setAvatar(file);
+                  setAvatarUrl(URL.createObjectURL(file));
                 }}
+                // onChange={(e: any) => {
+                //   const file = e.target.files[0];
+                //   const reader = new FileReader();
+                //   reader.onloadend = () => {
+                //     const blob = new Blob([reader.result as ArrayBuffer], {
+                //       type: file.type,
+                //     });
+                //     setAvatarBinary(blob);
+                //   };
+                //   reader.readAsArrayBuffer(file);
+                // }}
               />
               <div className="flex flex-col items-center justify-center space-y-3">
                 <span className="flex h-10 w-10 items-center justify-center rounded-full border border-stroke bg-white dark:border-strokedark dark:bg-boxdark">
@@ -319,20 +321,19 @@ const ContentSettings = () => {
                   <span className="text-primary">Klik untuk unggah foto</span>
                 </p>
                 <p className="mt-1.5">JPG, JPEG, atau PNG</p>
-                <p>(max 5 MB)</p>
+                <p>(Maksimal 5 MB)</p>
               </div>
             </div>
-
-            <div className="flex justify-end gap-4.5">
-              <button
-                className="flex justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
-                type="submit"
-                onClick={handleUpdateProfile}
-              >
-                Save
-              </button>
-            </div>
           </div>
+        </div>
+        <div className="flex justify-end gap-4.5 pb-4 pt-8">
+          <button
+            className="flex w-full justify-center rounded bg-primary px-6 py-2 font-medium text-gray hover:bg-opacity-90"
+            type="submit"
+            onClick={handleUpdateProfile}
+          >
+            Simpan
+          </button>
         </div>
       </div>
     </div>

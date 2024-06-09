@@ -116,7 +116,7 @@ const TableOnePenjualan = ({
             <h5 className="text-sm font-medium xsm:text-base">Total</h5>
           </div>
           <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium xsm:text-base">Action</h5>
+            <h5 className="text-sm font-medium xsm:text-base"></h5>
           </div>
         </div>
 

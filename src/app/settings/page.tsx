@@ -15,7 +15,7 @@ const Settings = () => {
   return (
     <DefaultLayout>
       <div className="mx-auto max-w-270">
-        <Breadcrumb pageName="Settings" />
+        <Breadcrumb pageName="Pengaturan Akun" />
         <ContentSettings />
       </div>
     </DefaultLayout>

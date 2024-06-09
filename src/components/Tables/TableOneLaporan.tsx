@@ -1,48 +1,6 @@
 import { BRAND } from "@/types/brand";
+import { formatDate } from "@/utils/dateFormater";
 import Image from "next/image";
-
-const brandData: BRAND[] = [
-  {
-    logo: "/images/product/product-01.png",
-    name: "Produk 1",
-    visitors: 3.5,
-    revenues: "5,768",
-    sales: 590,
-    conversion: 4.8,
-  },
-  {
-    logo: "/images/product/product-02.png",
-    name: "Produk 2",
-    visitors: 2.2,
-    revenues: "4,635",
-    sales: 467,
-    conversion: 4.3,
-  },
-  {
-    logo: "/images/product/product-02.png",
-    name: "Produk 3",
-    visitors: 2.1,
-    revenues: "4,290",
-    sales: 420,
-    conversion: 3.7,
-  },
-  {
-    logo: "/images/product/product-02.png",
-    name: "Produk 4",
-    visitors: 1.5,
-    revenues: "3,580",
-    sales: 389,
-    conversion: 2.5,
-  },
-  {
-    logo: "/images/product/product-02.png",
-    name: "Produk 5",
-    visitors: 3.5,
-    revenues: "6,768",
-    sales: 390,
-    conversion: 4.2,
-  },
-];
 
 export type TypeChartOne = {
   title: string;
@@ -76,7 +34,7 @@ const TableOneLaporan = ({
             <h5 className="text-sm font-medium xsm:text-base">Catatan</h5>
           </div>
           <div className="p-2.5 text-center xl:p-5">
-            <h5 className="text-sm font-medium xsm:text-base">Actions</h5>
+            <h5 className="text-sm font-medium xsm:text-base"></h5>
           </div>
         </div>
 
@@ -84,7 +42,7 @@ const TableOneLaporan = ({
           data.map((data, key) => (
             <div
               className={`grid grid-cols-[1fr_1fr_1fr] sm:grid-cols-[1fr_1fr_1fr_1fr_1fr] ${
-                key === brandData.length - 1
+                key === data.length - 1
                   ? ""
                   : "border-b border-stroke dark:border-strokedark"
               }`}
@@ -98,7 +56,7 @@ const TableOneLaporan = ({
 
               <div className="flex items-center justify-center p-2.5 xl:p-5">
                 <p className="text-center text-black dark:text-white">
-                  {data.updated_at}
+                  {formatDate(data.created_at)}
                 </p>
               </div>
 

@@ -9,8 +9,8 @@ export const useSettingHooks = () => {
   const [phoneNumber, setPhoneNumber] = useState("");
   const [bio, setBio] = useState("");
   const [password, setPassword] = useState("");
-  const [avatar, setAvatar] = useState("");
-  const [avatarBinary, setAvatarBinary] = useState<Blob | null>(null);
+  const [avatar, setAvatar] = useState<any>("");
+  const [avatarUrl, setAvatarUrl] = useState("");
 
   useEffect(() => {
     handleGetProfile();
@@ -21,40 +21,38 @@ export const useSettingHooks = () => {
     const data = await response.json();
 
     if (response.status === 200) {
-      console.log(data.data.avatar.url);
       localStorage.setItem("user", JSON.stringify(data.data));
       setName(data.data.name);
       setEmail(data.data.email);
       setPhoneNumber(data.data.phone_number);
       setBio(data.data.bio);
-      setAvatar(data.data.avatar.url);
+      setAvatarUrl(data.data.avatar.url);
       setLoading(false);
     } else {
       setLoading(false);
-      console.error(data);
     }
   };
 
   const handleUpdateProfile = async () => {
+    setLoading(true);
     const params = {
       name: name,
       email: email,
-      phone_number: phoneNumber,
+      phoneNumber: phoneNumber,
       bio: bio,
       password: password,
-      avatar: avatarBinary,
+      avatar: avatar,
     };
-    console.log(params);
 
     const response = await updateProfile(params);
     const data = await response.json();
 
     if (response.status === 200) {
-      setLoading(false);
+      // setLoading(false);
       localStorage.setItem("user", JSON.stringify(data.data));
+      window.location.reload();
     } else {
       setLoading(false);
-      console.error(data);
     }
   };
 
@@ -66,7 +64,7 @@ export const useSettingHooks = () => {
     bio,
     name,
     email,
-    avatar,
+    avatarUrl,
     loading,
     password,
     phoneNumber,
@@ -76,7 +74,7 @@ export const useSettingHooks = () => {
     setAvatar,
     setPassword,
     setPhoneNumber,
-    setAvatarBinary,
+    setAvatarUrl,
     handleGetProfile,
     handleUpdateProfile,
   };

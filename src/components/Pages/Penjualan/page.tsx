@@ -15,6 +15,7 @@ const Penjualan: React.FC = () => {
     products,
     totalBuy,
     isModalOpen,
+    modalMessage,
     totalProduct,
     totalProductKind,
     setNote,
@@ -45,16 +46,16 @@ const Penjualan: React.FC = () => {
             onIncrease={handleIncreaseProduct}
             onDecrease={handleDecreaseProduct}
           />
-          <div className="flex w-full flex-col rounded-sm border border-stroke bg-white p-4 py-6 shadow-default dark:border-strokedark dark:bg-boxdark">
+          <div className="flex w-full flex-col rounded-sm border border-stroke bg-white p-6 shadow-default dark:border-strokedark dark:bg-boxdark">
             <div className="flex flex-row items-end justify-between">
               <div className="w-1/2">
                 <div>
                   <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-                    Deskripsi
+                    Catatan
                   </label>
                   <textarea
                     rows={3}
-                    placeholder="Masukkan Deskripsi Barang"
+                    placeholder="Masukkan catatan penjualan"
                     className="w-full rounded-lg border-[1.5px] border-stroke bg-transparent px-5 py-3 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                     value={note}
                     onChange={(e) => setNote(e.target.value)}
@@ -73,7 +74,7 @@ const Penjualan: React.FC = () => {
                   <div>Jumlah Barang</div>
                   <div>{totalProduct}</div>
                 </div>
-                <div className="mt-3 flex flex-row items-center justify-between gap-4 border-t-2 border-t-neutral-200 pt-3 font-semibold">
+                <div className="mt-4 flex flex-row items-center justify-between gap-4 border-t-2 border-t-neutral-200 pt-3 text-xl font-semibold">
                   <div>Total Harga</div>
                   <div>
                     Rp{" "}
@@ -96,7 +97,8 @@ const Penjualan: React.FC = () => {
       </div>
       {isModalOpen && (
         <ConfirmationModal
-          message="Penjualan berhasil dimasukkan!"
+          message={modalMessage}
+          confirmText="OK"
           onConfirm={() => setIsModalOpen(false)}
         />
       )}
