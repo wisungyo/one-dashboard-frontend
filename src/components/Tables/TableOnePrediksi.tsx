@@ -94,7 +94,9 @@ const TableOnePrediksi = ({ title, data = [] }: TypeChartOne) => {
               <div className="flex items-center justify-center gap-3 p-2.5 sm:justify-self-start xl:p-5">
                 <div className="flex-shrink-0">
                   <Image
-                    src={data.image?.url || "/images/product/product.png"}
+                    src={
+                      data.product?.image?.url || "/images/product/product.png"
+                    }
                     alt="Brand"
                     width={48}
                     height={48}
