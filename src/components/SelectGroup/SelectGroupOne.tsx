@@ -47,7 +47,7 @@ const SelectGroupOne = ({
           }`}
         >
           <option value="-1" disabled className="text-body dark:text-bodydark">
-            Select your subject
+            Pilih kategori
           </option>
           {data.map((item, index) => (
             <option
