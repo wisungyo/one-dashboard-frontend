@@ -160,7 +160,9 @@ const TableOnePenjualan = ({
               <div className="flex items-center justify-center p-2.5 xl:p-5">
                 <p className="text-center text-black dark:text-white">
                   {data.quantity > 1 ? (
-                    data.totalBuy
+                    Math.floor(data.totalBuy)
+                      .toLocaleString()
+                      .replace(/,/g, ".")
                   ) : (
                     <span className="text-red">Stok Habis</span>
                   )}
@@ -168,7 +170,11 @@ const TableOnePenjualan = ({
               </div>
 
               <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
-                <p className="text-black dark:text-white">{data.quantity}</p>
+                <p className="text-black dark:text-white">
+                  {Math.floor(data.quantity)
+                    .toLocaleString()
+                    .replace(/,/g, ".")}
+                </p>
               </div>
 
               <div className="flex items-center justify-center gap-2 p-2.5 xl:p-5">

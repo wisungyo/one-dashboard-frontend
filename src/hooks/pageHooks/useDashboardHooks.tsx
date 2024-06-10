@@ -79,10 +79,12 @@ export const useDashboardHooks = () => {
   };
 
   const handleStartDate = (date: string) => {
+    setLoadingSummary(true);
     setStartDate(date);
   };
 
   const handleEndDate = (date: string) => {
+    setLoadingSummary(true);
     setEndDate(date);
   };
 

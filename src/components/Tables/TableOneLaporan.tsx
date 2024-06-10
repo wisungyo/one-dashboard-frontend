@@ -38,7 +38,7 @@ const TableOneLaporan = ({
           </div>
         </div>
 
-        {data.length > 1 ? (
+        {data.length > 0 ? (
           data.map((data, key) => (
             <div
               className={`grid grid-cols-[1fr_1fr_1fr] sm:grid-cols-[1fr_1fr_1fr_1fr_1fr] ${

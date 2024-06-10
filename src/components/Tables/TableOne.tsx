@@ -88,7 +88,9 @@ const TableOne = ({ title, data = [] }: TypeChartOne) => {
               <div className="flex items-center justify-center gap-3 p-2.5 sm:justify-self-start xl:p-5">
                 <div className="flex-shrink-0">
                   <Image
-                    src={data.avatar || "/images/product/product.png"}
+                    src={
+                      data.product?.image?.url || "/images/product/product.png"
+                    }
                     alt="Brand"
                     width={48}
                     height={48}
@@ -116,7 +118,9 @@ const TableOne = ({ title, data = [] }: TypeChartOne) => {
 
               <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
                 <p className="text-center text-black dark:text-white">
-                  {data.total_sold}
+                  {Math.floor(data.total_sold)
+                    .toLocaleString()
+                    .replace(/,/g, ".")}
                 </p>
               </div>
 

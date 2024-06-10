@@ -134,7 +134,7 @@ const TableOnePrediksi = ({ title, data = [] }: TypeChartOne) => {
                         <p
                           className={`${sold.increase_sold_percentage > 0 ? "text-green-500" : "text-rose-500"} text-xs`}
                         >
-                          {Math.abs(sold.increase_sold_percentage)}%
+                          {Math.abs(sold.increase_sold_percentage.toFixed(2))}%
                         </p>
                       )}
                       {index !== data.sold_summary.length - 1 ? (
@@ -152,7 +152,10 @@ const TableOnePrediksi = ({ title, data = [] }: TypeChartOne) => {
 
               <div className="hidden items-center justify-center p-2.5 sm:flex xl:p-5">
                 <p className="text-black dark:text-white">
-                  {data.product?.quantity}
+                  {/* {data.product?.quantity} */}
+                  {Math.floor(data.product?.quantity)
+                    .toLocaleString()
+                    .replace(/,/g, ".")}
                 </p>
               </div>
 

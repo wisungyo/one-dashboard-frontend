@@ -68,11 +68,19 @@ const LaporanDetail: React.FC = () => {
                   </div>
                   <div className="mt-6 flex flex-row items-center justify-between gap-4">
                     <div>Jenis Barang</div>
-                    <div>{products?.length}</div>
+                    <div>
+                      {Math.floor(products?.length)
+                        .toLocaleString()
+                        .replace(/,/g, ".")}
+                    </div>
                   </div>
                   <div className="flex flex-row items-center justify-between gap-4">
                     <div>Jumlah Barang</div>
-                    <div>{totalQuantity}</div>
+                    <div>
+                      {Math.floor(totalQuantity)
+                        .toLocaleString()
+                        .replace(/,/g, ".")}
+                    </div>
                   </div>
                   <div className="mt-4 flex flex-row items-center justify-between gap-4 border-t-2 border-t-neutral-200 pt-3 text-xl font-semibold">
                     <div>Total Harga</div>

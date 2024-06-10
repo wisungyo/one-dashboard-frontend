@@ -81,7 +81,7 @@ export const useUpdateBarangHooks = () => {
       return;
     }
 
-    if (!name || !code || !price || !description || !category || !image) {
+    if (!name || !code || !price || !description || !category) {
       setModalMessage("Pastikan semua data terisi!");
       showModal();
       setLoading(false);
