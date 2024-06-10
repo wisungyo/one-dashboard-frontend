@@ -254,7 +254,7 @@ const ContentSettings = () => {
                 <span className="flex gap-2.5">
                   <button
                     className="text-sm hover:text-primary"
-                    onClick={() => setAvatar("")}
+                    onClick={() => setAvatarUrl("")}
                   >
                     Hapus
                   </button>

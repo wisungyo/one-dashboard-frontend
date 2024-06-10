@@ -84,7 +84,7 @@ const DropdownUser = () => {
 
         <span className="h-12 w-12 rounded-full">
           <Image
-            className="rounded-full"
+            className="max-h-12 max-w-12 rounded-full object-cover p-1"
             width={48}
             height={48}
             src={avatar?.url || "/images/user/user.png"}

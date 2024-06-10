@@ -26,7 +26,7 @@ export const useSettingHooks = () => {
       setEmail(data.data.email);
       setPhoneNumber(data.data.phone_number);
       setBio(data.data.bio);
-      setAvatarUrl(data.data.avatar.url);
+      setAvatarUrl(data.data.avatar?.url);
       setLoading(false);
     } else {
       setLoading(false);
@@ -35,25 +35,38 @@ export const useSettingHooks = () => {
 
   const handleUpdateProfile = async () => {
     setLoading(true);
+
+    let avatarFile;
+    if (avatar) {
+      avatarFile = avatar;
+    } else {
+      avatarFile = await getDefaultAvatar();
+    }
+
     const params = {
       name: name,
       email: email,
       phoneNumber: phoneNumber,
       bio: bio,
       password: password,
-      avatar: avatar,
+      avatar: avatarFile,
     };
 
     const response = await updateProfile(params);
     const data = await response.json();
 
     if (response.status === 200) {
-      // setLoading(false);
       localStorage.setItem("user", JSON.stringify(data.data));
       window.location.reload();
     } else {
       setLoading(false);
     }
+  };
+
+  const getDefaultAvatar = async () => {
+    const response = await fetch("/images/user/user.png");
+    const blob = await response.blob();
+    return new File([blob], "user.png", { type: "image/png" });
   };
 
   const handleUpdateHeader = (data: any) => {
