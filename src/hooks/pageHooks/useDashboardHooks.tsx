@@ -19,11 +19,17 @@ export const useDashboardHooks = () => {
   useEffect(() => {
     const currentDate = new Date();
     const year = currentDate.getFullYear();
-    const month = currentDate.getMonth() + 1;
+    const month = currentDate.getMonth();
     const day = currentDate.getDate();
-    const lastDayOfMonth = new Date(year, month, 0);
-    const startDate = `${year}-01-01`;
-    const endDate = `${year}-${month.toString().padStart(2, "0")}-${day}`;
+
+    // Calculate the date 30 days ago
+    const startDateObj = new Date(currentDate);
+    startDateObj.setDate(currentDate.getDate() - 30);
+    const startDate = `${startDateObj.getFullYear()}-${(startDateObj.getMonth() + 1).toString().padStart(2, "0")}-${startDateObj.getDate().toString().padStart(2, "0")}`;
+
+    // Calculate today's date
+    const endDate = `${year}-${(month + 1).toString().padStart(2, "0")}-${day.toString().padStart(2, "0")}`;
+
     setStartDate(startDate);
     setEndDate(endDate);
   }, []);
@@ -42,7 +48,9 @@ export const useDashboardHooks = () => {
     if (response.status === 200) {
       const data = await response.json();
       const sales = data.data.map((item: any) => item.total_quantity);
-      const salesDates = data.data.map((item: any) => item.date);
+      const salesDates = data.data.map((item: any) =>
+        convertDateFormat(item.date),
+      );
       setSales(sales);
       setSalesDates(salesDates);
       setLoadingSummary(false);
@@ -50,6 +58,11 @@ export const useDashboardHooks = () => {
       setLoadingSummary(false);
       console.error("Failed to fetch sales summary");
     }
+  };
+
+  const convertDateFormat = (dateString: string) => {
+    const [year, month, day] = dateString.split("-");
+    return `${day}-${month}-${year}`;
   };
 
   const handleGetMostSoldProduct = async () => {
