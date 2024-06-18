@@ -7,6 +7,7 @@ import TableOne from "@/components/Tables/TableOne";
 import TableOneLaporan from "@/components/Tables/TableOneLaporan";
 import { useLaporanHooks } from "@/hooks/pageHooks/useLaporanHooks";
 import Loader2 from "@/components/common/Loader2";
+import DatePickerOne from "@/components/FormElements/DatePicker/DatePickerOne";
 
 const Laporan: React.FC = () => {
   const {
@@ -16,23 +17,25 @@ const Laporan: React.FC = () => {
     type,
     note,
     limit,
-    loading,
     sort_by,
-    end_date,
+    loading,
+    endDate,
     totalPage,
-    start_date,
+    startDate,
     product_id,
     total_item,
     category_id,
     transaction,
     total_price,
     customer_name,
+    handleEndDate,
     total_quantity,
     customer_phone,
-    totalTransaction,
-    customer_address,
     handleNextPage,
     handlePrevPage,
+    handleStartDate,
+    totalTransaction,
+    customer_address,
     handleGetDetailTransaction,
   } = useLaporanHooks();
 
@@ -43,6 +46,29 @@ const Laporan: React.FC = () => {
   return (
     <>
       <Breadcrumb pageName="Laporan" />
+
+      <div className="col-span-12 mb-4 flex gap-5.5 md:col-span-6">
+        <DatePickerOne
+          uniqueId="start-date"
+          label="Tanggal awal"
+          value={new Date(startDate).toLocaleDateString("id-ID", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          })}
+          onChange={handleStartDate}
+        />
+        <DatePickerOne
+          uniqueId="end-date"
+          label="Tanggal akhir"
+          value={new Date(endDate).toLocaleDateString("id-ID", {
+            month: "short",
+            day: "numeric",
+            year: "numeric",
+          })}
+          onChange={handleEndDate}
+        />
+      </div>
 
       <div className="grid grid-cols-12 gap-4 md:gap-6 2xl:gap-7.5">
         <div className="col-span-12">

@@ -38,7 +38,7 @@ const ECommerce: React.FC = () => {
           <DatePickerOne
             uniqueId="start-date"
             label="Tanggal awal"
-            value={new Date(startDate).toLocaleDateString("en-US", {
+            value={new Date(startDate).toLocaleDateString("id-ID", {
               month: "short",
               day: "numeric",
               year: "numeric",
@@ -48,7 +48,7 @@ const ECommerce: React.FC = () => {
           <DatePickerOne
             uniqueId="end-date"
             label="Tanggal akhir"
-            value={new Date(endDate).toLocaleDateString("en-US", {
+            value={new Date(endDate).toLocaleDateString("id-ID", {
               month: "short",
               day: "numeric",
               year: "numeric",
